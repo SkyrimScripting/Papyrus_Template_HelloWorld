@@ -1,0 +1,8 @@
+<PapyrusProject Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="Scripts">
+    <Imports>
+        <Import>C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\Scripts\Source</Import>
+    </Imports>
+    <Folders>
+        <Folder>./Source</Folder>
+    </Folders>
+</PapyrusProject>
