@@ -17,6 +17,12 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 - [Skyrim Special Edition: Creation Kit](https://store.steampowered.com/app/1946180/Skyrim_Special_Edition_Creation_Kit/) from Steam  
   (_provides the Papyrus Compiler and required game scripts_)
 
+### Optional but *Highly Recommended*
+- [Visual Studio Code](https://code.visualstudio.com/)  
+  (_with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed_)
+
+## Creation Kit
+
 > **Creation Kit** requires [Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) (_or "[Skyrim Anniverary Edition](https://store.steampowered.com/sub/626153/)"_)  
 > It is currently (2022) only distributed via Steam (_e.g. not available via GOG_)
 > It can be found in your Steam library under "**Software**"
