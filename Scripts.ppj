@@ -1,8 +1,30 @@
 <PapyrusProject Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="Scripts">
+    
+    <!-- Papyrus files can load *other* Papyrus files -->
+    <!-- Imports define folders with .psc files to load so your scripts can read and use them -->
     <Imports>
+        <!-- Base game scripts like "Actor" and "Quest" et at are defined here: -->
         <Import>C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition\Data\Scripts\Source</Import>
     </Imports>
+    
     <Folders>
-        <Folder>./Source</Folder>
+        <!-- Defines where your .psc source code files are -->
+        <!-- .psc files in these folders will be compiles and -->
+        <!-- output to the Output="" at the top of this file -->
+        <Folder>./Scripts/Source</Folder>
     </Folders>
+    
+    <!-- Optional: if your project folder is not inside of your mods/ folder -->
+    <!-- then you can enable this to copy your script file and .esp into a mods/ folder -->
+    <Variables>
+        <Variable Name="ModName" Value="HelloPapyrus" />
+        <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
+    </Variables>
+    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
+        <Command>(if exist "@OutputFolder" rmdir /s /q "@OutputFolder")</Command>
+        <Command>mkdir "@OutputFolder"</Command>
+        <Command>xcopy /e .\Scripts\ "@OutputFolder\Scripts\"</Command>
+        <Command>xcopy @ModName.esp "@OutputFolder\@ModName.esp*"</Command>
+    </PostBuildEvent>
+
 </PapyrusProject>
