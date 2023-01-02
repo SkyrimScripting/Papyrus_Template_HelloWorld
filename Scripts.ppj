@@ -1,5 +1,5 @@
 <PapyrusProject Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="Scripts">
-    
+
     <!-- Papyrus files can load *other* Papyrus files -->
     <!-- Imports define folders with .psc files to load so your scripts can read and use them -->
     <Imports>
@@ -21,6 +21,7 @@
         <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
     </Variables>
     <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
+        <!-- Set UseInBuild="false" to UseInBuild="true" to enable this section -->
         <Command>(if exist "@OutputFolder" rmdir /s /q "@OutputFolder")</Command>
         <Command>mkdir "@OutputFolder"</Command>
         <Command>xcopy /e .\Scripts\ "@OutputFolder\Scripts\"</Command>
