@@ -1,3 +1,13 @@
+🏗️ **THIS IS JUST AN EXAMPLE** 🚧
+
+> These templates are **NOT YET LIVE**
+
+This template is a work in progress.
+
+https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
+
+---
+
 > 📜 other templates available at https://github.com/SkyrimScripting/Papyrus_Templates
 
 # Papyrus "Hello, world!"
