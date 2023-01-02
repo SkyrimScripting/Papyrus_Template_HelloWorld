@@ -15,6 +15,8 @@
 ::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
 ::
 set SKYRIM_FOLDER=C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition
+set SCRIPTS_FOLDER=Scripts\Source\
+set OUTPUT_FOLDER=Scripts
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -22,12 +24,12 @@ set SKYRIM_FOLDER=C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special E
 
 @echo off
 
-where /q pyro
+where /q pyroXXX
 if %ERRORLEVEL% == 0 (
     echo ^[FOUND] pyro
     echo ^Searching for .ppj Papyrus Project Files
     if exist *.ppj (
-        echo YES
+        echo ^Compiling project using pyro
         for /r %%a in (*.ppj) do echo^ [FOUND] "%%a"
         for /r %%a in (*.ppj) do pyro -i "%%a"
         goto :done
@@ -63,9 +65,9 @@ if exist "%PAPYRUS_COMPILER%" (
 )
 
 if exist "%SKYRIM_FOLDER%\Data\Scripts\Source" (
-    set SCRIPTS_FOLDER="%SKYRIM_FOLDER%\Data\Scripts\Source"
+    set SKYRIM_SCRIPTS_FOLDER="%SKYRIM_FOLDER%\Data\Scripts\Source"
 ) else if exist "%SKYRIM_FOLDER%\Data\Source\Scripts" (
-    set SCRIPTS_FOLDER="%SKYRIM_FOLDER%\Data\Source\Scripts"
+    set SKYRIM_SCRIPTS_FOLDER="%SKYRIM_FOLDER%\Data\Source\Scripts"
 ) else (
     echo ^Could not find Papyrus scripts in your "%SKYRIM_FOLDER%\Data" directory
     echo ^Please follow README instructions to unzip the Scripts.zip or scripts.rar
@@ -74,7 +76,12 @@ if exist "%SKYRIM_FOLDER%\Data\Scripts\Source" (
     goto :error
 )
 
-echo ^[FOUND] Skyrim Scripts Folder "%SCRIPTS_FOLDER%"
+echo ^[FOUND] Skyrim Scripts Folder %SKYRIM_SCRIPTS_FOLDER%
+echo ^Compiling project using PapyrusCompiler.exe
+
+set "SKYRIM_SCRIPTS_FOLDER_NO_QUOTES=%SKYRIM_SCRIPTS_FOLDER:"=%"
+echo ^no quotes %SKYRIM_SCRIPTS_FOLDER_NO_QUOTES%
+"%PAPYRUS_COMPILER%" %SCRIPTS_FOLDER% -all -f=TESV_Papyrus_Flags.flg -o=%OUTPUT_FOLDER% -i="%SCRIPTS_FOLDER%;%SKYRIM_SCRIPTS_FOLDER_NO_QUOTES%"
 
 :error
 exit /b 1
