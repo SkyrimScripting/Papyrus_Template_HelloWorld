@@ -49,12 +49,20 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
   > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
   > ![Download Zip](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/DownloadZip.png)
 
-
-https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/DownloadZip.png
-
 ## (Recommended) Put this folder into your "Mods" folder
 
+> **Required:** [Mod Organizer 2](https://www.nexusmods.com/skyrimspecialedition/mods/6194?tab=files) or [Vortex](https://www.nexusmods.com/about/vortex/)
+
+
+
 ## (Alternate) Automatically copy files into your "Mods" folder
+
+> **Required:**  
+> [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
+> or  
+> [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
+
+
 
 # Creation Kit
 
