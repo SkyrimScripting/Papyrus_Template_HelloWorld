@@ -33,3 +33,11 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 > you should have access to the classic edition of Creation Kit under "**Tools**"
 
 ![Skyrim Creation Kit](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png)
+
+### Install Creation Kit Papyrus Scripts
+
+After you have installed Creation Kit, launch it _once_.
+
+It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
+
+![Unpack Scripts.zip](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/CreationKit/CreationKitUnpackScriptsZip.png)
