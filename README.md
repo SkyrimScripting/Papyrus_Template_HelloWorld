@@ -41,9 +41,9 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 
 - (**Recommended**) Download this repository using [`git`](https://git-scm.com/)
   - If you are new to `git`, please use [GitHub Desktop](https://desktop.github.com/). It's very easy.
-  > Under the "**Code**" button, choose "**Open with GitHub Desktop**"  
-  > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
-  > ![Open with GitHub Desktop](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/OpenWithGitHubDesktop.png)
+    > Under the "**Code**" button, choose "**Open with GitHub Desktop**"  
+    > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
+    > ![Open with GitHub Desktop](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/OpenWithGitHubDesktop.png)
 - (**Alternate**) Download this repository as a [`.zip`](archive/refs/heads/main.zip)
 
 ## (Recommended) Put this folder into your "Mods" folder
