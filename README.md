@@ -11,7 +11,7 @@
 - [Project setup](#project-setup)
     - [Doing it manually](#doing-it-manually)
 - [Compiling the project](#compiling-the-project)
-  - [Setup your own repository](#setup-your-own-repository)
+- [Setup your own repository](#setup-your-own-repository)
 
 
 ---
@@ -102,7 +102,7 @@ There are two supported ways to compile this Papyrus project:
 2. Run the `Compile.bat`
    > Simply double-click on the file from Explorer and files will compile.
 
-## Setup your own repository
+# Setup your own repository
 
 If you clone this template on GitHub, please:
 
