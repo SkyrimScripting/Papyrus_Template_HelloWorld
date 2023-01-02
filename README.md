@@ -62,9 +62,9 @@ It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
 
 You **must** complete this step.
 
-You will not be able to compile these Papyrus scripts without the scripts from `Scripts.zip` (_`scripts.rar` for LE_) extracted.
+You will not be able to compile Papyrus scripts without these scripts.
 
-You can verify that it worked by confirming that thousands of `.psc` files are located in one of the following two locations:
+You can verify it worked by confirming that many `.psc` files are located in one of the following two locations:
 
 - `<Your Skyrim Path>\Data\Source\Scripts\*.psc`
 - `<Your Skyrim Path>\Data\Scripts\Source\*.psc`
