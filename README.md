@@ -59,11 +59,11 @@ In your mod manager, find the location of your `mods` folder.
 
 #### MO2
 
-<img title="MO2 Mods folder" alt="MO2 Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/MO2/MO2SettingsModsFolder.png" heigh=100 />
+<img title="MO2 Mods folder" alt="MO2 Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/MO2/MO2SettingsModsFolder.png" height=100 />
 
 #### Vortex
 
-<img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" heigh=100 />
+<img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" height=100 />
 
 ## (Alternate) Automatically copy files into your "Mods" folder
 
@@ -71,8 +71,6 @@ In your mod manager, find the location of your `mods` folder.
 > [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
 > or  
 > [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
-
-
 
 # Creation Kit
 
