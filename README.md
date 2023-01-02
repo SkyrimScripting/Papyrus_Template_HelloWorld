@@ -60,7 +60,14 @@ It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
 > To unpack, manually extract `<Skyrim folder>\Data\scripts.rar`  
 > (_you can extract .rar files using [7-zip](https://www.7-zip.org/)_)
 
-...
+You **must** complete this step.
+
+You will not be able to compile these Papyrus scripts without the scripts from `Scripts.zip` (_`scripts.rar` for LE_) extracted.
+
+You can verify that it worked by confirming that thousands of `.psc` files are located in one of the following two locations:
+
+- `<Your Skyrim Path>\Data\Source\Scripts\*.psc`
+- `<Your Skyrim Path>\Data\Scripts\Source\*.psc`
 
 # Project setup
 
