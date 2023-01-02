@@ -12,6 +12,10 @@
       - [MO2](#mo2)
       - [Vortex](#vortex)
   - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
+    - [`Scripts.ppj`](#scriptsppj)
+    - [Copying Files](#copying-files)
+      - [Visual Studio Code](#visual-studio-code)
+      - [Pyro](#pyro)
 - [Creation Kit](#creation-kit)
   - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
 - [Project setup](#project-setup)
@@ -65,12 +69,58 @@ In your mod manager, find the location of your `mods` folder.
 
 <img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" height=100 />
 
+Take this template and place it inside of the `mods` folder.
+
+Refresh (_or close and re-open_) your mod manager and this template should now show up as a "mod"!
+
+Any scripts you work on in this project will be visible to Skyrim!
+
+You're ready :)
+
+> _Note: Vortex users may need to Disable and then Enable the mod after making changes!_
+
 ## (Alternate) Automatically copy files into your "Mods" folder
 
 > **Required:**  
 > [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
 > or  
 > [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
+
+If you **do not** want to place the template folder directly into your `mods` folder, that's okay too.
+
+This template is configured with an option to copy all of the scripts and other important files (_e.g. `.esp` or `.bsa` for templates containing those file types_).
+
+The option must be enabled in the `Scripts.ppj` file:
+
+### `Scripts.ppj`
+
+By default, the option to copy files is disabled (by `UseInBuild="false"`)
+
+```xml
+<Variables>
+    <Variable Name="ModName" Value="HelloPapyrus" />
+    <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
+</Variables>
+<PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
+```
+
+To enable copying files to your Mods folder, set `UseInBuild="true"`
+
+### Copying Files
+
+To "run" the `Scripts.ppj` file and deploy these scripts, you need either:
+
+ - [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
+or  
+ - [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
+
+#### Visual Studio Code
+
+With Visual Studio Code, run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
+
+#### Pyro
+
+With `pyro` installed (_and in your `PATH`_), run `Compile.bat`
 
 # Creation Kit
 
