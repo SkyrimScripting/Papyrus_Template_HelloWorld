@@ -6,6 +6,10 @@
 - [What does it do?](#what-does-it-do)
 - [Requirements](#requirements)
   - [Optional but *Highly Recommended*](#optional-but-highly-recommended)
+- [Getting Started](#getting-started)
+  - [Download the template](#download-the-template)
+  - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
+  - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
 - [Creation Kit](#creation-kit)
   - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
 - [Project setup](#project-setup)
@@ -30,6 +34,19 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 
 ## Optional but *Highly Recommended*
 - [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed
+
+# Getting Started
+
+## Download the template
+
+- (**Recommended**) Download this repository using [`git`](https://git-scm.com/)
+  - If you are new to `git`, please use [GitHub Desktop](https://desktop.github.com/). It's very easy.
+  > [![Download with GitHub Desktop](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/OpenWithGitHubDesktop.png)](x-github-client://openRepo/.)
+- (**Alternate**) Download this repository as a [`.zip`](archive/refs/heads/main.zip)
+
+## (Recommended) Put this folder into your "Mods" folder
+
+## (Alternate) Automatically copy files into your "Mods" folder
 
 # Creation Kit
 
