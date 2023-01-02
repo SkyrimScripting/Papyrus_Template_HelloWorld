@@ -14,7 +14,7 @@
 :: Note: the SKYRIM_FOLDER below is only required if you have
 ::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
 ::
-set SKYRIM_FOLDER=C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition
+set SKYRIM_FOLDER=C:\Program Files (x86)\Steam/steamapps/common/Skyrim Special Edition
 set SCRIPTS_FOLDER=Scripts\Source\
 set OUTPUT_FOLDER=Scripts
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -88,3 +88,7 @@ exit /b 1
 pause
 
 :done
+
+
+
+
