@@ -44,7 +44,13 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
     > Under the "**Code**" button, choose "**Open with GitHub Desktop**"  
     > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
     > ![Open with GitHub Desktop](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/OpenWithGitHubDesktop.png)
-- (**Alternate**) Download this repository as a [`.zip`](archive/refs/heads/main.zip)
+- (**Alternate**) Download this repository as a `.zip`
+  > Under the "**Code**" button, choose "**Download Zip**"  
+  > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
+  > ![Download Zip](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/DownloadZip.png)
+
+
+https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/DownloadZip.png
 
 ## (Recommended) Put this folder into your "Mods" folder
 
