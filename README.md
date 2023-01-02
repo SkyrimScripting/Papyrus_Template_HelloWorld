@@ -9,6 +9,8 @@
 - [Getting Started](#getting-started)
   - [Download the template](#download-the-template)
   - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
+      - [MO2](#mo2)
+      - [Vortex](#vortex)
   - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
 - [Creation Kit](#creation-kit)
   - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
@@ -53,7 +55,15 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 
 > **Required:** [Mod Organizer 2](https://www.nexusmods.com/skyrimspecialedition/mods/6194?tab=files) or [Vortex](https://www.nexusmods.com/about/vortex/)
 
+In your mod manager, find the location of your `mods` folder.
 
+#### MO2
+
+<img title="MO2 Mods folder" alt="MO2 Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/MO2/MO2SettingsModsFolder.png" heigh=100 />
+
+#### Vortex
+
+<img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" heigh=100 />
 
 ## (Alternate) Automatically copy files into your "Mods" folder
 
