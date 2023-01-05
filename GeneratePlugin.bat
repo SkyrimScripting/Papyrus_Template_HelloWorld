@@ -1,5 +1,7 @@
 @echo off
 
+setlocal EnableDelayedExpansion
+
 :: [GeneratePlugin.bat] - Create your own .esp (from existing template .esp)
 ::
 :: Requires bethkit.exe to be extracted to you computer and added to your PATH
@@ -15,16 +17,10 @@ set TEMPLATE_ESX=%TEMPLATE_NAME%.esx
 set TEMPLATE_ESP=%TEMPLATE_NAME%.esp
 
 set variable_desc[0]="Quest Name"
-set variable_name[0]=HelloPapyrusQuest
+set variable_name[0]=EXAMPLEMOD_Quest
 
 set variable_desc[1]="Quest Script Name"
 set variable_name[1]=HelloPapyrus
-
-@REM set variable_desc[0]="Quest Name"
-@REM set variable_name[0]=EXAMPLEMOD_MainQuest
-
-@REM set variable_desc[1]="Quest Script Name"
-@REM set variable_name[1]=EXAMPLEMOD_QuestScript
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -51,6 +47,8 @@ if not %ERRORLEVEL% == 0 (
     echo ^close it and open a new one before bethkit.exe will be found.
     GOTO :error
 )
+
+echo ^Generating new Skyrim plugin...
 
 for /f "usebackq delims=" %%i in (`
   powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox('Enter your mod name (no spaces, must start with a letter, only a-z A-Z 0-9 characters allowed)', 'Create Skyrim Mod', 'MYMOD')"
@@ -108,11 +106,30 @@ set /a "length-=1"
 
 echo ^Performing replacements in .esx "%ESX%"
 for /L %%i in (0,1,%length%) do (
-    call echo %%variable_desc[%%i]%%
-    call echo %%variable_name[%%i]%%
+    for /L %%i in (0,1,%length%) do (
+        if "!variable_value[%%i]!" == "$CANCEL$" (
+            echo ^Canceled
+            del "%ESX%"
+            GOTO :error
+        )
+    )
+    @REM for /F "tokens=2 delims==" %%x in ('set variable_value[') do (
+    @REM     if "%%x" == "$CANCEL$" (
+    @REM         echo ^Canceled
+    @REM         del "%ESX%"
+    @REM         GOTO :error
+    @REM     )
+    @REM )
     for /f "usebackq delims=" %%x in (`
-        powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox('Set name for %%variable_name[%%i]%%', '%%variable_desc[%%i]%%', '%%variable_name[%%i]%%')"
+        powershell -Command "$varname = '%%variable_name[%%i]%%' -replace 'EXAMPLEMOD_', ''; Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox('Set name for %%variable_desc[%%i]%%', '%%variable_desc[%%i]%%', \"%MOD_NAME%_${varname}\"); if (-Not $result) { $result = '$CANCEL$'; }; $result"
     `) do set variable_value[%%i]=%%x
+)
+for /L %%i in (0,1,%length%) do (
+    if "!variable_value[%%i]!" == "$CANCEL$" (
+        echo ^Canceled
+        del "%ESX%"
+        GOTO :error
+    )
 )
 
 for /L %%i in (0,1,%length%) do (

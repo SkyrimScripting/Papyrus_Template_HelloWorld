@@ -24,7 +24,7 @@
     
     <!-- Optional: if your project folder is not inside of your mods/ folder -->
     <!-- then you can enable this to copy your script file and .esp into a mods/ folder -->
-    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
+    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="true">
         <!-- Set UseInBuild="false" to UseInBuild="true" to enable this section -->
         <Command>echo Output Folder: "@OutputFolder"</Command>
         <!-- <Command>(if exist "@OutputFolder" rmdir /s /q "@OutputFolder")</Command>

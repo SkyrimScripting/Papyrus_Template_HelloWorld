@@ -28,7 +28,7 @@ The simplest possible Papyrus plugin for Skyrim.
     - [`Compile.bat`](#compilebat)
 - [Customize the `.esp` Plugin File](#customize-the-esp-plugin-file)
   - [Creation Kit](#creation-kit)
-  - [`Customize.ps1`](#customizeps1)
+  - [`GeneratePlugin.ps1`](#generatepluginps1)
 - [Setup your own repository](#setup-your-own-repository)
 
 
@@ -230,14 +230,14 @@ Open it in **Creation Kit**
 
 _\-or-_
 
-Customize it with **`Customize.ps1`**
+Customize it with **`GeneratePlugin.ps1`**
 
 ## Creation Kit
 
 - Open Creation Kit
 - Select the `.esp`
 
-## `Customize.ps1`
+## `GeneratePlugin.ps1`
 
 # Setup your own repository
 
