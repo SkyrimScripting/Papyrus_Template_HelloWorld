@@ -1,10 +1,18 @@
 <PapyrusProject Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="Scripts">
 
+    <!-- These variables simply help you organize your .ppj Papyrus project file -->
+    <Variables>
+        <Variable Name="ModName" Value="HelloPapyrus" />
+        <Variable Name="SkyrimFolder" Value="FOOO BAR" />
+        <Variable Name="DataScriptsFolder" Value="Data\Source\Scripts" />
+        <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
+    </Variables>
+
     <!-- Papyrus files can load *other* Papyrus files -->
     <!-- Imports define folders with .psc files to load so your scripts can read and use them -->
     <Imports>
         <!-- Base game scripts like "Actor" and "Quest" et at are defined here: -->
-        <Import>C:\Program Files (x86)\Steam/steamapps/common/Skyrim Special Edition\Data\Scripts\Source</Import>
+        <Import>@SkyrimFolder\@DataScriptsFolder</Import>
     </Imports>
     
     <Folders>
@@ -16,16 +24,13 @@
     
     <!-- Optional: if your project folder is not inside of your mods/ folder -->
     <!-- then you can enable this to copy your script file and .esp into a mods/ folder -->
-    <Variables>
-        <Variable Name="ModName" Value="HelloPapyrus" />
-        <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
-    </Variables>
     <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
         <!-- Set UseInBuild="false" to UseInBuild="true" to enable this section -->
-        <Command>(if exist "@OutputFolder" rmdir /s /q "@OutputFolder")</Command>
+        <Command>echo Output Folder: "@OutputFolder"</Command>
+        <!-- <Command>(if exist "@OutputFolder" rmdir /s /q "@OutputFolder")</Command>
         <Command>mkdir "@OutputFolder"</Command>
         <Command>xcopy /e .\Scripts\ "@OutputFolder\Scripts\"</Command>
-        <Command>xcopy @ModName.esp "@OutputFolder\@ModName.esp*"</Command>
+        <Command>xcopy @ModName.esp "@OutputFolder\@ModName.esp*"</Command> -->
     </PostBuildEvent>
 
 </PapyrusProject>

@@ -1,4 +1,14 @@
-:: Set this to the root folder of your Skyrim or Skyrim Special Edition installation
+@echo off
+
+
+
+
+
+:: TODO - REMOVE the STEAM stuff. set SKYRIM_FOLDER *here* from Init.bat :)
+
+
+
+:: [Compile.bat] - Compile Papyrus scripts!
 :: 
 :: You must have Creation Kit installed
 ::
@@ -11,22 +21,21 @@
 ::
 :: * pyro: https://github.com/fireundubh/pyro/releases
 ::
-:: Note: the SKYRIM_FOLDER below is only required if you have
-::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
-::
 :: This reads your Steam installation folder from the Windows registry into a variable
 for /F "tokens=2* skip=2" %%a in ('reg query "HKCU\SOFTWARE\Valve\Steam" /v "SteamPath"') do set STEAM_PATH=%%b
+::
+:: Note: the SKYRIM_FOLDER below is only used if you have
+::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
+::
 set SKYRIM_FOLDER=%STEAM_PATH%/steamapps/common/Skyrim Special Edition
 set SCRIPTS_FOLDER=Scripts\Source\
 set OUTPUT_FOLDER=Scripts
+
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Compile.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-@echo off
-
-where /q pyroXXX
+where /q pyro
 if %ERRORLEVEL% == 0 (
     echo ^[FOUND] pyro
     echo ^Searching for .ppj Papyrus Project Files
@@ -65,7 +74,6 @@ if exist "%PAPYRUS_COMPILER%" (
     echo ^Could not find Papyrus compiler "%PAPYRUS_COMPILER%"
     goto :error
 )
-
 
 if not exist "%SKYRIM_FOLDER%\Data\Scripts\Source\TESV_Papyrus_Flags.flg" (
     if not exist "%SKYRIM_FOLDER%\Data\Source\Scripts\TESV_Papyrus_Flags.flg" (

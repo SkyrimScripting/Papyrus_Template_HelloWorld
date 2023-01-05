@@ -1,9 +1,18 @@
+echo "Hello"
+
+pause
+
+
+###################################
+# TODO - update tasks.json as well!
+###################################
+
 ########################################################
 # Needs to be set to the root of your Steam installation
 $steamFolder = "C:\Program Files (x86)\Steam"
 ########################################################
 $bat_compile_script = "Compile.bat"
-$ppj_pyro_script    = "Scripts.ppj"
+$ppj_pyro_script = "Scripts.ppj"
 ########################################################
 
 $exists = Test-Path -Path $steamFolder
@@ -32,9 +41,11 @@ $creationKitExists_LE = Test-Path -Path "${skyrimPath_LE}/${compilerPath}"
 
 if ($creationKitExists_SE) {
     $skyrimPath = $skyrimPath_SE
-} elseif ($creationKitExists_LE) {
-    $skyrimPath= $skyrimPath_LE
-} else {
+}
+elseif ($creationKitExists_LE) {
+    $skyrimPath = $skyrimPath_LE
+}
+else {
     echo "[ERROR] Could not find a Skyrim installation including Creation Kit"
     echo "Searched: ${skyrimPath_SE}/${compilerPath}"
     echo "Searched: ${skyrimPath_LE}/${compilerPath}"
@@ -42,22 +53,33 @@ if ($creationKitExists_SE) {
 }
 
 # Update the compiler .bat with the correct path
-echo "Updating SKYRIM_FOLDER path in ${bat_compile_script}"
-$bat_content = Get-Content $bat_compile_script -Raw
-$updated_bat = $bat_content -replace "set SKYRIM_FOLDER=.*", "set SKYRIM_FOLDER=${skyrimPath}"
-Set-Content -Path $bat_compile_script -Value $updated_bat
-echo "Updated."
+# echo "Updating ${bat_compile_script}"
+# $bat_content = Get-Content $bat_compile_script -Raw
+# echo "Updating SKYRIM_FOLDER path to ${skyrimPath}"
+# $updated_bat = $bat_content -replace "set SKYRIM_FOLDER=.*", "set SKYRIM_FOLDER=${skyrimPath}"
+# Set-Content -Path $bat_compile_script -Value $updated_bat
+# echo "Updated."
 
-# Update the .ppj Papyrus Project file with the correct path
-$useScriptsSource = Test-Path -Path "${skyrimPath}\Data\Scripts\Source"
-$useSourceScripts = Test-Path -Path "${skyrimPath}\Data\Source\Scripts"
-echo "Updating <Import> for Skyrim Creation Kit scripts in ${ppj_pyro_script}"
+# Update the .ppj Papyrus project file
+echo "Updating ${ppj_pyro_script}"
 $pyro_content = Get-Content $ppj_pyro_script -Raw
-if ($useScriptsSource) {
-    $updated_ppj = $pyro_content -replace "<Import>.*Steam.*steamapps.*common.*Data.*Scripts.*</Import>", "<Import>${skyrimPath}\Data\Scripts\Source</Import>"
-} else {
-    $updated_ppj = $pyro_content -replace "<Import>.*Steam.*steamapps.*common.*Data.*Scripts.*</Import>", "<Import>${skyrimPath}\Data\Source\Scripts</Import>"
-}
+echo "Updating SkyrimFolder path to ${skyrimPath}"
+$updated_ppj = $pyro_content -replace "<Variable Name=\"SkyrimFolder\" Value=\".*\" />", "<Variable Name=\"SkyrimFolder\" Value=\"${skyrimPath}\" />"
+
+
+# $useScriptsSource = Test-Path -Path "${skyrimPath}\Data\Scripts\Source"
+# $useSourceScripts = Test-Path -Path "${skyrimPath}\Data\Source\Scripts"
+
+
+
+# echo "Updating <Import> for Skyrim Creation Kit scripts in ${ppj_pyro_script}"
+# if ($useScriptsSource) {
+#     $updated_ppj = $pyro_content -replace "<Import>.*Steam.*steamapps.*common.*Data.*Scripts.*</Import>", "<Import>${skyrimPath}\Data\Scripts\Source</Import>"
+# }
+# else {
+#     $updated_ppj = $pyro_content -replace "<Import>.*Steam.*steamapps.*common.*Data.*Scripts.*</Import>", "<Import>${skyrimPath}\Data\Source\Scripts</Import>"
+# }
+
 Set-Content -Path $ppj_pyro_script -Value $updated_ppj
 echo "Updated."
 

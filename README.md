@@ -26,6 +26,9 @@ The simplest possible Papyrus plugin for Skyrim.
   - [Compiling the project](#compiling-the-project)
     - [Visual Studio Code (_Recommended_)](#visual-studio-code-recommended)
     - [`Compile.bat`](#compilebat)
+- [Customize the `.esp` Plugin File](#customize-the-esp-plugin-file)
+  - [Creation Kit](#creation-kit)
+  - [`Customize.ps1`](#customizeps1)
 - [Setup your own repository](#setup-your-own-repository)
 
 
@@ -41,7 +44,7 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 
 [The Elder Scrolls V: Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) from **Steam**.
 
-\- or -
+_\-or-_
 
 [The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) from **Steam**.
 
@@ -215,6 +218,27 @@ Double-click on the file from Explorer and files will compile.
 > This script will automatically detect `Scripts.zip` and extract it, if found.  
 > It also finds your Steam installation automatically), like `Init.ps1`.
 
+# Customize the `.esp` Plugin File
+
+Each template comes with an `.esp` "Elder Scrolls Plugin" file.
+
+This file is loaded by Skyrim and used to run your scripts.
+
+If you want to customize the `.esp` file:
+
+Open it in **Creation Kit**
+
+_\-or-_
+
+Customize it with **`Customize.ps1`**
+
+## Creation Kit
+
+- Open Creation Kit
+- Select the `.esp`
+
+## `Customize.ps1`
+
 # Setup your own repository
 
 If you clone this template on GitHub, please:
@@ -231,4 +255,3 @@ If you'd like to know more about open source licenses, see:
 **If you use this template, PLEASE release your project as a public open source project.** 💖
 
 **PLEASE DO NOT RELEASE YOUR SKSE PLUGIN ON NEXUS/ETC WITHOUT MAKING THE SOURCE CODE AVAILABLE**
-
