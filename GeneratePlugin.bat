@@ -65,6 +65,19 @@ if [%MOD_NAME%] == [] (
 set ESX=%MOD_NAME%.%TEMPLATE_NAME%.esx
 set ESP=%MOD_NAME%.%TEMPLATE_NAME%.esp
 
+if exist "%ESP%" (
+    echo ^.esp already exists for this mod: "%ESP%"
+    echo ^Please delete this file or choose a new mod name.
+    echo ^We don't override files here, sorry!
+    GOTO :error
+)
+if exist "%ESX%" (
+    echo ^.esx already exists for this mod: "%ESX%"
+    echo ^Please delete this file or choose a new mod name.
+    echo ^We don't override files here, sorry!
+    GOTO :error
+)
+
 if not exist "%ESX%" (
     if exist "%TEMPLATE_ESX%" (
         echo ^Template .esx exists "%TEMPLATE_ESX%"
@@ -80,11 +93,9 @@ if not exist "%ESX%" (
         bethkit convert "%TEMPLATE_ESP%" "%ESX%"
         if not exist "%ESX%" (
             echo ^[ERROR] There was a problem generating .esx from .esp "%TEMPLATE_ESP%"
-            GOTO :rrror
+            GOTO :error
         )
     )
-) else (
-    echo ^Mod .esx already exists "%ESX%"
 )
 
 set length=0
@@ -99,10 +110,32 @@ echo ^Performing replacements in .esx "%ESX%"
 for /L %%i in (0,1,%length%) do (
     call echo %%variable_desc[%%i]%%
     call echo %%variable_name[%%i]%%
-    for /f "usebackq delims=" %%i in (`
+    for /f "usebackq delims=" %%x in (`
         powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox('Set name for %%variable_name[%%i]%%', '%%variable_desc[%%i]%%', '%%variable_name[%%i]%%')"
-    `) do set MOD_NAME=%%i
+    `) do set variable_value[%%i]=%%x
 )
+
+for /L %%i in (0,1,%length%) do (
+    call echo %%variable_desc[%%i]%%
+    call echo %%variable_name[%%i]%%
+    call echo %%variable_value[%%i]%%
+    call echo Updating "%ESX%" "%%variable_desc[%%i]%%" Replacing "%%variable_name[%%i]%%" with "%%variable_value[%%i]%%"
+    call powershell -Command "$content = Get-Content -Raw '%ESX%'; $content = $content -replace '%%variable_name[%%i]%%', '%%variable_value[%%i]%%'; $content = $content.Trim(); Set-Content '%ESX%' $content"
+)
+
+echo ^Converting "%ESX%" into an "%ESP"
+echo ^bethkit convert "%ESX%" "%ESP%"
+bethkit convert "%ESX%" "%ESP%"
+if not exist "%ESP%" (
+    echo ^[ERROR] There was a problem generating .esp from .esx "%ESX%"
+    GOTO :error
+)
+
+echo ^Cleaning up. Deleting .esx "%ESX%"
+del "%ESX%"
+
+echo ^Done!
+GOTO :done
 
 :error
 exit /b 1
