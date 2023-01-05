@@ -12,6 +12,8 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
 
 # Papyrus "Hello, world!"
 
+The simplest possible Papyrus plugin for Skyrim.
+
 - [Papyrus "Hello, world!"](#papyrus-hello-world)
 - [What does it do?](#what-does-it-do)
 - [Requirements](#requirements)
@@ -32,10 +34,6 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
     - [`Compile.bat`](#compilebat)
 - [Setup your own repository](#setup-your-own-repository)
 
-
----
-
-The simplest possible Papyrus plugin for Skyrim.
 
 # What does it do?
 
