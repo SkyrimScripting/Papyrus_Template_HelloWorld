@@ -25,8 +25,6 @@ set OUTPUT_FOLDER=Scripts
 :: Compile.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-
-
 :: Check for pyro.exe
 where /q pyro
 if %ERRORLEVEL% == 0 (
@@ -110,20 +108,3 @@ exit /b 1
 pause
 
 :done
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

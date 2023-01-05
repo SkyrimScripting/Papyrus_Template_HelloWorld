@@ -33,10 +33,6 @@ set TASKS_JSON=.vscode/tasks.json
 :: Init.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:: Just while testing:
-cls
-::::::::::::::::::::::
-
 if not "%SKYRIM_FOLDER%" == "" (
     if not exist "%SKYRIM_FOLDER%/Papyrus Compiler/PapyrusCompiler.exe" (
         echo ^[ERROR] Provided SKYRIM_FOLDER is missing Creation Kit

@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<plugin version="0.7.4">
+  <TES4 flags="0x00000000" id="00000000" day="0" month="0" lastUserID="0" currentUserID="0" version="44" unknown="0x0000">
+    <HEDR>
+      <struct version="1.70000005" numRecords="2" nextObjectID="00000801" />
+    </HEDR>
+    <CNAM>DEFAULT</CNAM>
+    <INTV>1</INTV>
+  </TES4>
+  <GRUP label="QUST" groupType="0" day="159" month="45" lastUserID="0" currentUserID="0" unknown="0x00000000">
+    <QUST flags="0x00000000" id="00000800" day="159" month="45" lastUserID="0" currentUserID="0" version="44" unknown="0x0000">
+      <EDID>HelloPapyrusQuest</EDID>
+      <VMAD version="5" format="2">
+        <script name="HelloPapyrus" status="0" />
+      </VMAD>
+      <DNAM>
+        <struct flags="0x0101" priority="0" unknown0="0x2b" unknown1="0x00000000" type="0" />
+      </DNAM>
+      <NEXT />
+      <ANAM>0</ANAM>
+    </QUST>
+  </GRUP>
+</plugin>
