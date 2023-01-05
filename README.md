@@ -22,8 +22,8 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
   - [Visual Studio Code (_optional_)](#visual-studio-code-optional)
 - [Getting Started](#getting-started)
   - [Download the template](#download-the-template)
-    - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
-    - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
+    - [(_Recommended_) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
+    - [(_Alternate_) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
   - [Project setup](#project-setup)
     - [`Init.sh` Setup Script](#initsh-setup-script)
     - [Doing it manually](#doing-it-manually)
@@ -111,7 +111,7 @@ Optional but *Highly Recommended*
   > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
   > ![Download Zip](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/DownloadZip.png)
 
-### (Recommended) Put this folder into your "Mods" folder
+### (_Recommended_) Put this folder into your "Mods" folder
 
 > **Required:** [Mod Organizer 2](https://www.nexusmods.com/skyrimspecialedition/mods/6194?tab=files) or [Vortex](https://www.nexusmods.com/about/vortex/)
 
@@ -135,7 +135,7 @@ You're ready :)
 
 > _Note: Vortex users may need to Disable and then Enable the mod after making changes!_
 
-### (Alternate) Automatically copy files into your "Mods" folder
+### (_Alternate_) Automatically copy files into your "Mods" folder
 
 > **Required:**  
 > [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
