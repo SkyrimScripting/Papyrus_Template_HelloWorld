@@ -14,7 +14,9 @@
 :: Note: the SKYRIM_FOLDER below is only required if you have
 ::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
 ::
-set SKYRIM_FOLDER=C:\Program Files (x86)\Steam/steamapps/common/Skyrim Special Edition
+:: This reads your Steam installation folder from the Windows registry into a variable
+for /F "tokens=2* skip=2" %%a in ('reg query "HKCU\SOFTWARE\Valve\Steam" /v "SteamPath"') do set STEAM_PATH=%%b
+set SKYRIM_FOLDER=%STEAM_PATH%/steamapps/common/Skyrim Special Edition
 set SCRIPTS_FOLDER=Scripts\Source\
 set OUTPUT_FOLDER=Scripts
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -64,31 +66,43 @@ if exist "%PAPYRUS_COMPILER%" (
     goto :error
 )
 
-if exist "%SKYRIM_FOLDER%\Data\Scripts\Source" (
-    set SKYRIM_SCRIPTS_FOLDER="%SKYRIM_FOLDER%\Data\Scripts\Source"
-) else if exist "%SKYRIM_FOLDER%\Data\Source\Scripts" (
-    set SKYRIM_SCRIPTS_FOLDER="%SKYRIM_FOLDER%\Data\Source\Scripts"
-) else (
-    echo ^Could not find Papyrus scripts in your "%SKYRIM_FOLDER%\Data" directory
-    echo ^Please follow README instructions to unzip the Scripts.zip or scripts.rar
-    echo ^[NOT FOUND] Searched "%SKYRIM_FOLDER%\Data\Scripts\Source"
-    echo ^[NOT FOUND] Searched "%SKYRIM_FOLDER%\Data\Source\Scripts"
-    goto :error
+
+if not exist "%SKYRIM_FOLDER%\Data\Scripts\Source\TESV_Papyrus_Flags.flg" (
+    if not exist "%SKYRIM_FOLDER%\Data\Source\Scripts\TESV_Papyrus_Flags.flg" (
+        if exist "%SKYRIM_FOLDER%\Data\Scripts.zip" (
+            echo ^Could not find Papyrus scripts in your "%SKYRIM_FOLDER%\Data" directory
+            echo ^[FOUND] Scripts.zip
+            echo ^Extracting to Data folder: "%SKYRIM_FOLDER%\Data\"
+            echo ^powershell Expand-Archive %SKYRIM_FOLDER%\Data\Scripts.zip -DestinationPath %SKYRIM_FOLDER%\Data
+            powershell -Command "& Expand-Archive -Force '%SKYRIM_FOLDER%\Data\Scripts.zip' -DestinationPath '%SKYRIM_FOLDER%\Data'"
+        )
+    )
 )
 
-echo ^[FOUND] Skyrim Scripts Folder %SKYRIM_SCRIPTS_FOLDER%
+if not exist "%SKYRIM_FOLDER%\Data\Scripts\Source\TESV_Papyrus_Flags.flg" (
+    if not exist "%SKYRIM_FOLDER%\Data\Source\Scripts\TESV_Papyrus_Flags.flg" (
+        echo ^Could not find Papyrus scripts in your "%SKYRIM_FOLDER%\Data" directory
+        echo ^Please follow README instructions to unzip the Scripts.zip or scripts.rar
+        echo ^[NOT FOUND] Searched "%SKYRIM_FOLDER%\Data\Scripts\Source"
+        echo ^[NOT FOUND] Searched "%SKYRIM_FOLDER%\Data\Source\Scripts"
+        goto :error
+    )
+)
+
 echo ^Compiling project using PapyrusCompiler.exe
 
-set "SKYRIM_SCRIPTS_FOLDER_NO_QUOTES=%SKYRIM_SCRIPTS_FOLDER:"=%"
-echo ^no quotes %SKYRIM_SCRIPTS_FOLDER_NO_QUOTES%
-"%PAPYRUS_COMPILER%" %SCRIPTS_FOLDER% -all -f=TESV_Papyrus_Flags.flg -o=%OUTPUT_FOLDER% -i="%SCRIPTS_FOLDER%;%SKYRIM_SCRIPTS_FOLDER_NO_QUOTES%"
+set COMPILER_INCLUDES=Scripts\Source
+if exist "%SKYRIM_FOLDER%\Data\Scripts\Source" (
+    set COMPILER_INCLUDES=%COMPILER_INCLUDES%;%SKYRIM_FOLDER%\Data\Scripts\Source
+)
+if exist "%SKYRIM_FOLDER%\Data\Source\Scripts" (
+    set COMPILER_INCLUDES=%COMPILER_INCLUDES%;%SKYRIM_FOLDER%\Data\Source\Scripts
+)
+
+"%PAPYRUS_COMPILER%" %SCRIPTS_FOLDER% -all -f=TESV_Papyrus_Flags.flg -o=%OUTPUT_FOLDER% -i="%COMPILER_INCLUDES%"
 
 :error
 exit /b 1
 pause
 
 :done
-
-
-
-
