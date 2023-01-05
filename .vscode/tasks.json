@@ -4,7 +4,7 @@
         {
             "type": "pyro",
             "projectFile": "Scripts.ppj",
-            "gamePath": "C:\\Steam\\steamapps\\common\\Skyrim Special Edition\\",
+            "gamePath": "c://steam//steamapps//common//Skyrim Special Edition",
             "problemMatcher": [
                 "$PapyrusCompiler"
             ],
@@ -16,3 +16,4 @@
         }
     ]
 }
+

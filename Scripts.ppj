@@ -3,7 +3,7 @@
     <!-- These variables simply help you organize your .ppj Papyrus project file -->
     <Variables>
         <Variable Name="ModName" Value="HelloPapyrus" />
-        <Variable Name="SkyrimFolder" Value="FOOO BAR" />
+        <Variable Name="SkyrimFolder" Value="c:/steam/steamapps/common/Skyrim Special Edition" />
         <Variable Name="DataScriptsFolder" Value="Data\Source\Scripts" />
         <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
     </Variables>
@@ -34,5 +34,36 @@
     </PostBuildEvent>
 
 </PapyrusProject>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

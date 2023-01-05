@@ -1,13 +1,5 @@
 @echo off
 
-
-
-
-
-:: TODO - REMOVE the STEAM stuff. set SKYRIM_FOLDER *here* from Init.bat :)
-
-
-
 :: [Compile.bat] - Compile Papyrus scripts!
 :: 
 :: You must have Creation Kit installed
@@ -21,13 +13,11 @@
 ::
 :: * pyro: https://github.com/fireundubh/pyro/releases
 ::
-:: This reads your Steam installation folder from the Windows registry into a variable
-for /F "tokens=2* skip=2" %%a in ('reg query "HKCU\SOFTWARE\Valve\Steam" /v "SteamPath"') do set STEAM_PATH=%%b
-::
 :: Note: the SKYRIM_FOLDER below is only used if you have
 ::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
 ::
-set SKYRIM_FOLDER=%STEAM_PATH%/steamapps/common/Skyrim Special Edition
+set SKYRIM_FOLDER=c:/steam/steamapps/common/Skyrim Special Edition
+
 set SCRIPTS_FOLDER=Scripts\Source\
 set OUTPUT_FOLDER=Scripts
 
@@ -35,6 +25,9 @@ set OUTPUT_FOLDER=Scripts
 :: Compile.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+
+
+:: Check for pyro.exe
 where /q pyro
 if %ERRORLEVEL% == 0 (
     echo ^[FOUND] pyro
@@ -53,6 +46,7 @@ if %ERRORLEVEL% == 0 (
     echo ^Falling back to PapyrusCompiler.exe...
 )
 
+:: Check for PapyrusCompiler.exe
 where /q PapyrusCompiler
 if %ERRORLEVEL% == 0 (
     echo ^[FOUND] PapyrusCompiler.exe
@@ -66,7 +60,9 @@ if not exist "%SKYRIM_FOLDER%" (
     goto :error
 )
 
+echo here
 set PAPYRUS_COMPILER=%SKYRIM_FOLDER%\Papyrus Compiler\PapyrusCompiler.exe
+echo there
 if exist "%PAPYRUS_COMPILER%" (
     echo ^[FOUND] PapyrusCompiler.exe
     echo "%PAPYRUS_COMPILER%"
@@ -114,3 +110,20 @@ exit /b 1
 pause
 
 :done
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
