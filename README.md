@@ -19,19 +19,13 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
 - [Getting Started](#getting-started)
   - [Download the template](#download-the-template)
   - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
-      - [MO2](#mo2)
-      - [Vortex](#vortex)
   - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
-    - [`Scripts.ppj`](#scriptsppj)
-    - [Copying Files](#copying-files)
-      - [Visual Studio Code](#visual-studio-code)
-      - [Pyro](#pyro)
-- [Creation Kit](#creation-kit)
-  - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
-- [Project setup](#project-setup)
-    - [Doing it manually](#doing-it-manually)
+  - [Project setup](#project-setup)
 - [Compiling the project](#compiling-the-project)
 - [Setup your own repository](#setup-your-own-repository)
+- [Additional Information](#additional-information)
+  - [Creation Kit](#creation-kit)
+  - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
 
 
 ---
@@ -132,45 +126,7 @@ With Visual Studio Code, run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
 
 With `pyro` installed (_and in your `PATH`_), run `Compile.bat`
 
-# Creation Kit
-
-You need to install the Bethesda Skyrim Creation Kit to write Papyrus scripts.
-
-The Creation Kit comes with the Papyrus compiler and required [game scripts](#install-creation-kit-papyrus-scripts).
-
-> **Creation Kit** requires [Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) (_or "[Skyrim Anniverary Edition](https://store.steampowered.com/sub/626153/)"_)  
-> It is currently (2022) only distributed via Steam (_e.g. not available via GOG_)
-> It can be found in your Steam library under "**Software**"
-
-<img title="Skyrim Special Edition: Creation Kit" alt="Skyrim Special Edition: Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitSE.png" height=100 />
-
-> If you have the old [The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) "Legendary Edition" of Skyrim on Steam,  
-> you should have access to the classic edition of Creation Kit under "**Tools**"
-
-<img title="Skyrim Creation Kit" alt="Skyrim Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png" height=100 />
-
-## Install Creation Kit Papyrus Scripts
-
-After you have installed Creation Kit, launch it _once_.
-
-It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
-
-<img title="Unpack Scripts.zip" alt="Unpack Scripts.zip" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/CreationKit/CreationKitUnpackScriptsZip.png" height=150 />
-
-> Note: "Legendary Edition" Creation Kit will not prompt you.  
-> To unpack, manually extract `<Skyrim folder>\Data\scripts.rar`  
-> (_you can extract .rar files using [7-zip](https://www.7-zip.org/)_)
-
-You **must** complete this step.
-
-You will not be able to compile Papyrus scripts without these scripts.
-
-You can verify it worked by confirming that many `.psc` files are located in one of the following two locations:
-
-- `<Your Skyrim Path>\Data\Source\Scripts\*.psc`
-- `<Your Skyrim Path>\Data\Scripts\Source\*.psc`
-
-# Project setup
+## Project setup
 
 The project is configured, by default, for users who have Skyrim installed at:
 
@@ -222,3 +178,43 @@ If you'd like to know more about open source licenses, see:
 **If you use this template, PLEASE release your project as a public open source project.** 💖
 
 **PLEASE DO NOT RELEASE YOUR SKSE PLUGIN ON NEXUS/ETC WITHOUT MAKING THE SOURCE CODE AVAILABLE**
+
+# Additional Information
+
+## Creation Kit
+
+You need to install the [Bethesda Skyrim Creation Kit](https://www.creationkit.com/index.php?title=Main_Page) to write Papyrus scripts.
+
+The Creation Kit comes with the Papyrus compiler and required [game scripts](#install-creation-kit-papyrus-scripts).
+
+> **Creation Kit** requires [Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) (_or "[Skyrim Anniverary Edition](https://store.steampowered.com/sub/626153/)"_)  
+> It is currently (2022) only distributed via Steam (_e.g. not available via GOG_)
+> It can be found in your Steam library under "**Software**"
+
+<img title="Skyrim Special Edition: Creation Kit" alt="Skyrim Special Edition: Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitSE.png" height=100 />
+
+> If you have the old [The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) "Legendary Edition" of Skyrim on Steam,  
+> you should have access to the classic edition of Creation Kit under "**Tools**"
+
+<img title="Skyrim Creation Kit" alt="Skyrim Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png" height=100 />
+
+## Install Creation Kit Papyrus Scripts
+
+After you have installed Creation Kit, launch it _once_.
+
+It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
+
+<img title="Unpack Scripts.zip" alt="Unpack Scripts.zip" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/CreationKit/CreationKitUnpackScriptsZip.png" height=150 />
+
+> Note: "Legendary Edition" Creation Kit will not prompt you.  
+> To unpack, manually extract `<Skyrim folder>\Data\scripts.rar`  
+> (_you can extract .rar files using [7-zip](https://www.7-zip.org/)_)
+
+You **must** complete this step.
+
+You will not be able to compile Papyrus scripts without these scripts.
+
+You can verify it worked by confirming that many `.psc` files are located in one of the following two locations:
+
+- `<Your Skyrim Path>\Data\Source\Scripts\*.psc`
+- `<Your Skyrim Path>\Data\Scripts\Source\*.psc`
