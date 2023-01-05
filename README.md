@@ -184,7 +184,7 @@ If you have Skyrim installed to a different location, run the `Init.ps1` script.
 
 <img title="Run Init.ps1 with Powershell" alt="Run Init.ps1 with PowerShell" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Papyrus/InitPs1.png" height=200>
 
-`Init.ps1` finds your Steam installation automatically and updates all files with the correct Skyrim folder path.
+`Init.ps1` finds your Steam installation automatically  and updates all files with the correct Skyrim folder path.
 
 ### Doing it manually
 
@@ -202,6 +202,9 @@ There are two supported ways to compile this Papyrus project:
    > Run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`). You're done, it "just works".
 2. Run the `Compile.bat`
    > Simply double-click on the file from Explorer and files will compile.
+   >
+   > This script will automatically detect `Scripts.zip` and extract it, if found.  
+   > It also finds your Steam installation automatically), like `Init.ps1`.
 
 # Setup your own repository
 
