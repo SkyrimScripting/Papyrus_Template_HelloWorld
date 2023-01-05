@@ -17,12 +17,16 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
 - [Requirements](#requirements)
   - [Skyrim (from Steam)](#skyrim-from-steam)
   - [Skyrim Creation Kit (from Steam)](#skyrim-creation-kit-from-steam)
+    - [Installing Creation Kit](#installing-creation-kit)
+    - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
   - [Visual Studio Code (_optional_)](#visual-studio-code-optional)
 - [Getting Started](#getting-started)
   - [Download the template](#download-the-template)
-  - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
-  - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
+    - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
+    - [(Alternate) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
   - [Project setup](#project-setup)
+    - [`Init.sh` Setup Script](#initsh-setup-script)
+    - [Doing it manually](#doing-it-manually)
 - [Compiling the project](#compiling-the-project)
 - [Setup your own repository](#setup-your-own-repository)
 
@@ -105,7 +109,7 @@ Optional but *Highly Recommended*
   > ![Code](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/CodeButton.png)  
   > ![Download Zip](https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/GitHub/DownloadZip.png)
 
-## (Recommended) Put this folder into your "Mods" folder
+### (Recommended) Put this folder into your "Mods" folder
 
 > **Required:** [Mod Organizer 2](https://www.nexusmods.com/skyrimspecialedition/mods/6194?tab=files) or [Vortex](https://www.nexusmods.com/about/vortex/)
 
@@ -129,7 +133,7 @@ You're ready :)
 
 > _Note: Vortex users may need to Disable and then Enable the mod after making changes!_
 
-## (Alternate) Automatically copy files into your "Mods" folder
+### (Alternate) Automatically copy files into your "Mods" folder
 
 > **Required:**  
 > [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
@@ -142,7 +146,7 @@ This template is configured with an option to copy all of the scripts and other 
 
 The option must be enabled in the `Scripts.ppj` file:
 
-### `Scripts.ppj`
+#### `Scripts.ppj`
 
 By default, the option to copy files is disabled (by `UseInBuild="false"`)
 
@@ -156,7 +160,7 @@ By default, the option to copy files is disabled (by `UseInBuild="false"`)
 
 To enable copying files to your Mods folder, set `UseInBuild="true"`
 
-### Copying Files
+#### Copying Files
 
 To "run" the `Scripts.ppj` file and deploy these scripts, you need either:
 
@@ -164,11 +168,11 @@ To "run" the `Scripts.ppj` file and deploy these scripts, you need either:
 or  
  - [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
 
-#### Visual Studio Code
+##### Visual Studio Code
 
 With Visual Studio Code, run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
 
-#### Pyro
+##### Pyro
 
 With `pyro` installed (_and in your `PATH`_), run `Compile.bat`
 
@@ -181,6 +185,8 @@ C:\Program Files (x86)\Steam\steamapps\common\Skyrim
 or
 C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition
 ```
+
+### `Init.sh` Setup Script
 
 If you have Skyrim installed to a different location, run the `Init.ps1` script.
 
