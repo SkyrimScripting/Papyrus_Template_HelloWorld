@@ -15,7 +15,9 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
 - [Papyrus "Hello, world!"](#papyrus-hello-world)
 - [What does it do?](#what-does-it-do)
 - [Requirements](#requirements)
-  - [Optional but *Highly Recommended*](#optional-but-highly-recommended)
+  - [Skyrim (from Steam)](#skyrim-from-steam)
+  - [Skyrim Creation Kit (from Steam)](#skyrim-creation-kit-from-steam)
+  - [Visual Studio Code (_optional_)](#visual-studio-code-optional)
 - [Getting Started](#getting-started)
   - [Download the template](#download-the-template)
   - [(Recommended) Put this folder into your "Mods" folder](#recommended-put-this-folder-into-your-mods-folder)
@@ -23,9 +25,6 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
   - [Project setup](#project-setup)
 - [Compiling the project](#compiling-the-project)
 - [Setup your own repository](#setup-your-own-repository)
-- [Additional Information](#additional-information)
-  - [Creation Kit](#creation-kit)
-  - [Install Creation Kit Papyrus Scripts](#install-creation-kit-papyrus-scripts)
 
 
 ---
@@ -40,9 +39,56 @@ As soon as you begin a game or load an existing game, it pops up a "Hello, world
 
 # Requirements
 
-- [Skyrim Special Edition: Creation Kit](https://store.steampowered.com/app/1946180/Skyrim_Special_Edition_Creation_Kit/) from Steam  
+## Skyrim (from Steam)
 
-## Optional but *Highly Recommended*
+[The Elder Scrolls V: Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) from **Steam**.
+
+\- or -
+
+[The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) from **Steam**.
+
+## Skyrim Creation Kit (from Steam)
+
+You need to install the [Bethesda Skyrim Creation Kit](https://store.steampowered.com/app/1946180/Skyrim_Special_Edition_Creation_Kit/) to author Papyrus scripts.
+
+### Installing Creation Kit
+
+The Creation Kit comes with the **Papyrus compiler** and _required_ [game scripts](#install-creation-kit-papyrus-scripts).
+
+If you have either Skyrim, Skyrim Special Edition, or Skyrim Anniversary Edition, then the **Creation Kit** will be available in **Steam**.
+
+[Skyrim Special Edition: Creation Kit](https://store.steampowered.com/app/1946180/Skyrim_Special_Edition_Creation_Kit/) appears under **`Software`** if you have [Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) (_or "[Skyrim Anniverary Edition](https://store.steampowered.com/sub/626153/)"_)  :
+
+> <img title="Skyrim Special Edition: Creation Kit" alt="Skyrim Special Edition: Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitSE.png" height=100 />
+
+If you have the old [The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) (_"Legendary Edition"_) of Skyrim on Steam, Creation Kit appears under **`Tools`**:
+
+<img title="Skyrim Creation Kit" alt="Skyrim Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png" height=100 />
+
+### Install Creation Kit Papyrus Scripts
+
+After you have installed Creation Kit, launch it _once_.
+
+It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
+
+<img title="Unpack Scripts.zip" alt="Unpack Scripts.zip" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/CreationKit/CreationKitUnpackScriptsZip.png" height=150 />
+
+> Note: "Legendary Edition" Creation Kit will not prompt you.  
+> To unpack, manually extract `<Skyrim folder>\Data\scripts.rar`  
+> (_you can extract .rar files using [7-zip](https://www.7-zip.org/)_)
+
+You **must** complete this step.
+
+You will not be able to compile Papyrus scripts without these scripts.
+
+You can verify it worked by confirming that many `.psc` files are located in one of the following two locations:
+
+- `<Your Skyrim Path>\Data\Source\Scripts\*.psc`
+- `<Your Skyrim Path>\Data\Scripts\Source\*.psc`
+
+## Visual Studio Code (_optional_)
+
+Optional but *Highly Recommended*
 - [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed
 
 # Getting Started
@@ -179,42 +225,3 @@ If you'd like to know more about open source licenses, see:
 
 **PLEASE DO NOT RELEASE YOUR SKSE PLUGIN ON NEXUS/ETC WITHOUT MAKING THE SOURCE CODE AVAILABLE**
 
-# Additional Information
-
-## Creation Kit
-
-You need to install the [Bethesda Skyrim Creation Kit](https://www.creationkit.com/index.php?title=Main_Page) to write Papyrus scripts.
-
-The Creation Kit comes with the Papyrus compiler and required [game scripts](#install-creation-kit-papyrus-scripts).
-
-> **Creation Kit** requires [Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) (_or "[Skyrim Anniverary Edition](https://store.steampowered.com/sub/626153/)"_)  
-> It is currently (2022) only distributed via Steam (_e.g. not available via GOG_)
-> It can be found in your Steam library under "**Software**"
-
-<img title="Skyrim Special Edition: Creation Kit" alt="Skyrim Special Edition: Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitSE.png" height=100 />
-
-> If you have the old [The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) "Legendary Edition" of Skyrim on Steam,  
-> you should have access to the classic edition of Creation Kit under "**Tools**"
-
-<img title="Skyrim Creation Kit" alt="Skyrim Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png" height=100 />
-
-## Install Creation Kit Papyrus Scripts
-
-After you have installed Creation Kit, launch it _once_.
-
-It will prompt you to unpack a `Scripts.zip` file. Say "Yes" to unpack the zip.
-
-<img title="Unpack Scripts.zip" alt="Unpack Scripts.zip" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/CreationKit/CreationKitUnpackScriptsZip.png" height=150 />
-
-> Note: "Legendary Edition" Creation Kit will not prompt you.  
-> To unpack, manually extract `<Skyrim folder>\Data\scripts.rar`  
-> (_you can extract .rar files using [7-zip](https://www.7-zip.org/)_)
-
-You **must** complete this step.
-
-You will not be able to compile Papyrus scripts without these scripts.
-
-You can verify it worked by confirming that many `.psc` files are located in one of the following two locations:
-
-- `<Your Skyrim Path>\Data\Source\Scripts\*.psc`
-- `<Your Skyrim Path>\Data\Scripts\Source\*.psc`
