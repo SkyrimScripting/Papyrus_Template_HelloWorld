@@ -27,9 +27,9 @@ https://github.com/SkyrimScripting/Papyrus_Templates will be released soon.
   - [Project setup](#project-setup)
     - [`Init.sh` Setup Script](#initsh-setup-script)
     - [Doing it manually](#doing-it-manually)
-- [Compiling the project](#compiling-the-project)
-  - [Visual Studio Code (_Recommended_)](#visual-studio-code-recommended)
-  - [`Compile.bat`](#compilebat)
+  - [Compiling the project](#compiling-the-project)
+    - [Visual Studio Code (_Recommended_)](#visual-studio-code-recommended)
+    - [`Compile.bat`](#compilebat)
 - [Setup your own repository](#setup-your-own-repository)
 
 
@@ -204,19 +204,19 @@ If you have Skyrim installed to a different location, run the `Init.ps1` script.
 
 > Note: `Init.ps1` also determines whether your Creation Kit game scripts were extracted from `Scripts.zip` or `scripts.rar` into either the `Data\Source\Scripts` or `Data\Scripts\Source` folders and chooses the correct one automatically.
 
-# Compiling the project
+## Compiling the project
 
 There are two supported ways to compile this Papyrus project:
 
 - Visual Studio Code (_Recommended_)
 - `Compile.bat`
 
-## Visual Studio Code (_Recommended_)
+### Visual Studio Code (_Recommended_)
 
 In [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed:
    > Run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
 
-## `Compile.bat`
+### `Compile.bat`
 
 Double-click on the file from Explorer and files will compile.
 
