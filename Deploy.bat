@@ -6,7 +6,7 @@
 ::       the SKYRIM_MODS_FOLDER environment variable to deploy mods
 ::       files into your Vortex or Mod Organizer 2's "Mods/" folder
 ::
-set SKYRIM_FOLDER=c:/steam/steamapps/common/Skyrim Special Edition
+set SKYRIM_FOLDER=c:/steam\steamapps\common\Skyrim Special Edition
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deploy.bat script code below

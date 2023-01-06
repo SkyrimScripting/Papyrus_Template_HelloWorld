@@ -3,21 +3,21 @@
     <!-- These variables simply help you organize your .ppj Papyrus project file -->
     <Variables>
         <Variable Name="ModName" Value="Hello World" />
-        <Variable Name="SkyrimFolder" Value="c:/steam/steamapps/common/Skyrim Special Edition" />
-        <Variable Name="DataScriptsFolder" Value="Data\Source\Scripts" />
+        <Variable Name="SkyrimFolder" Value="c:/steam\steamapps\common\Skyrim Special Edition" />
+        <Variable Name="DataScriptsFolder" Value="Data\Scripts\Source" />
     </Variables>
 
-    <!-- Papyrus files can load *other* Papyrus files -->
-    <!-- Imports define folders with .psc files to load so your scripts can read and use them -->
+    <!-- Papyrus files can load *other* Papyrus files
+         Imports define folders with .psc files to load so your scripts can read and use them -->
     <Imports>
         <!-- Base game scripts like "Actor" and "Quest" et at are defined here: -->
         <Import>@SkyrimFolder\@DataScriptsFolder</Import>
     </Imports>
     
     <Folders>
-        <!-- Defines where your .psc source code files are -->
-        <!-- .psc files in these folders will be compiles and -->
-        <!-- output to the Output="" at the top of this file -->
+        <!-- Defines where your .psc source code files are
+             .psc files in these folders will be compiles and
+             output to the Output="" at the top of this file -->
         <Folder>./Scripts/Source</Folder>
     </Folders>
     

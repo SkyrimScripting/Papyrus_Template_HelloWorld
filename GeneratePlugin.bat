@@ -1,6 +1,7 @@
 @echo off
-
 setlocal EnableDelayedExpansion
+
+:: TODO - Show errors in popup boxes (nicer UX when double-clicking from folder)
 
 :: [GeneratePlugin.bat] - Create your own .esp (from existing template .esp)
 ::

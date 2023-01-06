@@ -1,6 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: During testing:
+cls
+
 :: [Setup.bat] - Initialize Papyrus project template
 
 :: (Optional)
@@ -28,7 +31,7 @@ set TASKS_JSON=.vscode/tasks.json
 
 set PAPYRUS_COMPILER_PATH=Papyrus Compiler/PapyrusCompiler.exe
 
-:: For newline support
+:: For newlines in PowerShell commands
 (set \n=^
 %=Do not remove this line=%
 )
@@ -39,40 +42,43 @@ set PAPYRUS_COMPILER_PATH=Papyrus Compiler/PapyrusCompiler.exe
 
 if not "%SKYRIM_FOLDER%" == "" (
     if not exist "%SKYRIM_FOLDER%/%PAPYRUS_COMPILER_PATH%" (
+        echo "ERROR MSG"
         set ERROR_MSG=^[ERROR] Provided SKYRIM_FOLDER is missing Creation Kit
-        set ERROR_MSG=^!ERROR_MSG!!\n!!\n!SKYRIM_FOLDER: "%SKYRIM_FOLDER%"
+        set ERROR_MSG=^!ERROR_MSG!`n`nSKYRIM_FOLDER: "%SKYRIM_FOLDER%"
         set ERROR_MSG=^!ERROR_MSG!!\n!!\n!Searched for: "%SKYRIM_FOLDER%/%PAPYRUS_COMPILER_PATH%"
-        goto :error
+        goto :error_msg
     ) else (
         echo ^[FOUND] Skyrim with Creation Kit: "%SKYRIM_FOLDER%"
     )
 )
 
-:: If SKYRIM_FOLDER isn't manually configured above, this discovers
-:: your Steam installation folder from the Windows registry
+:: Find your Steam installation folder (from the Windows registry for your user)
 set STEAM_FOLDER=
 if "%SKYRIM_FOLDER%" == "" (
-    echo ^... Searching for SKYRIM_FOLDER ...
-    echo ^... Checking Registry item SteamPath at HKCU\SOFTWARE\Valve\Steam ...
+    echo ^[SEARCH] Searching for SKYRIM_FOLDER
+    echo ^[REGISTRY] Checking Registry item SteamPath at HKCU\SOFTWARE\Valve\Steam
     for /F "tokens=2* skip=2" %%a in ('reg query "HKCU\SOFTWARE\Valve\Steam" /v "SteamPath"') do set STEAM_FOLDER=%%b
 )
 
 set SE_FOLDER_NAME=Skyrim Special Edition
-set SE_GAME_PATH=%STEAM_FOLDER%/steamapps/common/%SE_FOLDER_NAME%
-set SE_COMPILER_PATH=%SE_GAME_PATH%/%PAPYRUS_COMPILER_PATH%
+set SE_GAME_PATH=%STEAM_FOLDER%\steamapps\common\%SE_FOLDER_NAME%
+set SE_COMPILER_PATH=%SE_GAME_PATH%\%PAPYRUS_COMPILER_PATH%
 set LE_FOLDER_NAME=Skyrim
-set LE_GAME_PATH=%STEAM_FOLDER%/steamapps/common/%LE_FOLDER_NAME%
-set LE_COMPILER_PATH=%LE_GAME_PATH%/%PAPYRUS_COMPILER_PATH%
+set LE_GAME_PATH=%STEAM_FOLDER%\steamapps\common\%LE_FOLDER_NAME%
+set LE_COMPILER_PATH=%LE_GAME_PATH%\%PAPYRUS_COMPILER_PATH%
+set VALIDATE_SCRIPTS_FOLDER_FILE=TESV_Papyrus_Flags.flg
 
+:: Find Skyrim installation (containing Creation Kit)
 if "%SKYRIM_FOLDER%" == "" (
-    if [%STEAM_FOLDER%] == [] (
+    if "%STEAM_FOLDER%" == "" (
         set ERROR_MSG=^[ERROR] STEAM_FOLDER not found from registry
-        set ERROR_MSG=^!ERROR_MSG!!\n!!\n!Please open Setup.bat and set the SKYRIM_FOLDER variable
-        set ERROR_MSG=^!ERROR_MSG!!\n!or set the SKYRIM_FOLDER environment variable.
-        set ERROR_MSG=^!ERROR_MSG!!\n!!\n!Then you can run this script again!
-        set ERROR_MSG=^!ERROR_MSG!!\n!!\n!Read this template README for more information.
-        goto :error
+        set ERROR_MSG=^!ERROR_MSG!`n`nPlease open Setup.bat and set the SKYRIM_FOLDER variable
+        set ERROR_MSG=^!ERROR_MSG!`nor set the SKYRIM_FOLDER environment variable.
+        set ERROR_MSG=^!ERROR_MSG!`n`nThen you can run this script again!
+        set ERROR_MSG=^!ERROR_MSG!`n`nRead this template README for more information.
+        goto :error_msg
     ) else (
+        echo ^[REGISTRY] SteamPath: "%STEAM_FOLDER%"
         if exist "%SE_COMPILER_PATH%" (
             set SKYRIM_FOLDER=%SE_GAME_PATH%
             echo ^[FOUND] Skyrim SE with Creation Kit: %SE_GAME_PATH%
@@ -82,10 +88,89 @@ if "%SKYRIM_FOLDER%" == "" (
                 echo ^[FOUND] Skyrim LE with Creation Kit: %LE_GAME_PATH%
             ) else (
                 set ERROR_MSG=^[ERROR] No Skyrim installation containing Creation Kit found
-                set ERROR_MSG=^!ERROR_MSG!!\n!!\n!Searched paths:
-                set ERROR_MSG=^!ERROR_MSG!!\n!- "%SE_COMPILER_PATH%"
-                set ERROR_MSG=^!ERROR_MSG!!\n!- "%LE_COMPILER_PATH%"
+                set ERROR_MSG=^!ERROR_MSG!`n!\n!Searched paths:
+                set ERROR_MSG=^!ERROR_MSG!`n- "%SE_COMPILER_PATH%"
+                set ERROR_MSG=^!ERROR_MSG!`n- "%LE_COMPILER_PATH%"
+                goto :error_msg
+            )
+        )
+    )
+)
+
+:: Find out if your Creation Kit setup uses Data/Scripts/Source or Data/Source/Scripts for main game .psc script files
+echo ^[SEARCH] Searching for Skryim game scripts
+:: Check Source\Scripts
+if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
+    echo ^[FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Source\Scripts"
+    set DATA_SCRIPTS_FOLDER=Data\Source\Scripts
+) else (
+    echo ^[NOT FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Source\Scripts"
+    :: Check Scripts\Source
+    if exist "%SKYRIM_FOLDER%\Data\Scripts\Source\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
+        echo ^[FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Scripts\Source"
+        set DATA_SCRIPTS_FOLDER=Data\Scripts\Source
+    ) else (
+        :: Check for Scripts.zip
+        echo ^[NOT FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Scripts\Source"
+        if exist "%SKYRIM_FOLDER%\Data\Scripts.zip" (
+            echo ^[FOUND] Compressed Skyrim game scripts at "%SKYRIM_FOLDER%\Data\Scripts.zip"
+            :: Do you want to extract Scripts.zip?
+            for /f "usebackq delims=" %%i in (`
+                powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"Would you like to extract the Skyrim game scripts`ninto your Skyrim Data/ folder?`n`nThese scripts are required for this template to run.`n`nRecommended: Yes\", 'Extract Creation Kit Scripts.zip', 'YesNo').ToString()"
+            `) do set MSGBOX_RESULT=%%i
+            if "!MSGBOX_RESULT!" == "Yes" (
+                :: Let's extract Scripts.zip!
+                echo ^[EXTRACT] Extracting Scripts.zip
+                echo ^[RUN] powershell Expand-Archive %SKYRIM_FOLDER%\Data\Scripts.zip -DestinationPath %SKYRIM_FOLDER%\Data
+                powershell -Command "& Expand-Archive -Force '%SKYRIM_FOLDER%\Data\Scripts.zip' -DestinationPath '%SKYRIM_FOLDER%\Data'"
+                if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
+                    echo ^[FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Source\Scripts"
+                    set DATA_SCRIPTS_FOLDER=Data\Source\Scripts
+                    :: Now, do you want to move Source\Scripts to Scripts\Source?
+                    for /f "usebackq delims=" %%i in (`
+                        powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"Scripts.zip game file extraction complete.`n`nWould you like to rename?`n`nData\Source\Scripts -----^^^> Data\Scripts\Source`n`nIt is more common for Skyrim modders to use Data\Scripts\Source`n`nIf you are unsure, it is recommended to select: Yes\", 'Rename Data\Source\Scripts to Data\Scripts\Source', 'YesNo').ToString()"
+                    `) do set MSGBOX_RESULT=%%i
+                    if "!MSGBOX_RESULT!" == "Yes" (
+                        echo ^... Moving Data\Source\Scripts to Data\Scripts\Source ...
+                        if not exist "%SKYRIM_FOLDER%\Data\Scripts\Source" (
+                            echo ^... Create folder "%SKYRIM_FOLDER%\Data\Scripts\Source"
+                            mkdir "%SKYRIM_FOLDER%\Data\Scripts\Source"
+                        )
+                        move "%SKYRIM_FOLDER%\Data\Source\Scripts\*" "%SKYRIM_FOLDER%\Data\Scripts\Source\"
+                        if exist "%SKYRIM_FOLDER%\Data\Scripts\Source\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
+                            echo ^[DONE] Successfully moved game scripts to Data\Scripts\Source
+                            set DATA_SCRIPTS_FOLDER=Data\Scripts\Source
+                        ) else (
+                            set ERROR_MSG=^[ERROR] Failed to move scripts from Data\Source\Scripts to Data\Scripts\Source
+                            goto :error_msg
+                        )
+                    )
+                ) else (
+                    set ERROR_MSG=^[ERROR] Extracting Scripts.zip failed
+                    set ERROR_MSG=^!ERROR_MSG!`n`nDid not find Skyrim game scripts in:
+                    set ERROR_MSG=^!ERROR_MSG!`n%SKYRIM_FOLDER%\Data\Source\Scripts
+                    goto :error_msg
+                )
+            ) else (
+                echo ^[CANCEL] Game script extraction canceled
                 goto :error
+            )
+        ) else (
+            echo ^[NOT FOUND] Compressed Skyrim game scripts at "%SKYRIM_FOLDER%\Data\Scripts.zip"
+            if exist "%SKYRIM_FOLDER%\Data\scripts.rar" (
+                echo ^[FOUND] Compressed Skyrim game scripts at "%SKYRIM_FOLDER%\Data\scripts.rar"
+                set ERROR_MSG=^[ERROR] Skyrim game scripts not extracted into Data\ folder
+                set ERROR_MSG=^!ERROR_MSG!`n`nPlease open your Skyrim Data\ folder
+                set ERROR_MSG=^!ERROR_MSG!`n`nThen extract the scripts.rar file
+                set ERROR_MSG=^!ERROR_MSG!`n`nNote: to extract the scripts.rar file, you can use 7-zip which can be downloaded at https://7-zip.org/
+                goto :error_msg
+            ) else (
+                echo ^[NOT FOUND] Compressed Skyrim game scripts at "%SKYRIM_FOLDER%\Data\scripts.rar"
+                set ERROR_MSG=^[ERROR] Your Creation Kit installation may be corrupt.
+                set ERROR_MSG=^!ERROR_MSG!`n`nPlease reinstall Creation Kit.
+                set ERROR_MSG=^!ERROR_MSG!`n`nWe could not find required file TESV_Papyrus_Flags.flg
+                set ERROR_MSG=^!ERROR_MSG!`nin Data\Source\Scripts or Data\Scripts\Source
+                goto :error_msg
             )
         )
     )
@@ -107,6 +192,7 @@ if "%MOD_NAME%" == "" (
 echo Updating "%PPJ%"
 powershell -Command "$content = Get-Content -Raw '%PPJ%'; $content = $content -replace '<Variable Name=\"SkyrimFolder\" Value=\"(.*)\" />', '<Variable Name=\"SkyrimFolder\" Value=\"%SKYRIM_FOLDER%\" />'; $content = $content.Trim(); Set-Content '%PPJ%' $content"
 powershell -Command "$content = Get-Content -Raw '%PPJ%'; $content = $content -replace '<Variable Name=\"ModName\" Value=\"(.*)\" />', '<Variable Name=\"ModName\" Value=\"%MOD_NAME%\" />'; $content = $content.Trim(); Set-Content '%PPJ%' $content"
+powershell -Command "$content = Get-Content -Raw '%PPJ%'; $content = $content -replace '<Variable Name=\"DataScriptsFolder\" Value=\"(.*)\" />', '<Variable Name=\"DataScriptsFolder\" Value=\"%DATA_SCRIPTS_FOLDER%\" />'; $content = $content.Trim(); Set-Content '%PPJ%' $content"
 
 echo Updating "%COMPILE_BAT%"
 powershell -Command "$content = Get-Content -Raw '%COMPILE_BAT%'; $content = $content -replace 'set SKYRIM_FOLDER=.*', 'set SKYRIM_FOLDER=%SKYRIM_FOLDER%'; $content = $content.Trim(); Set-Content '%COMPILE_BAT%' $content"
@@ -115,16 +201,16 @@ echo Updating "%DEPLOY_BAT%"
 powershell -Command "$content = Get-Content -Raw '%DEPLOY_BAT%'; $content = $content -replace 'set SKYRIM_FOLDER=.*', 'set SKYRIM_FOLDER=%SKYRIM_FOLDER%'; $content = $content.Trim(); Set-Content '%DEPLOY_BAT%' $content"
 
 echo Updating "%TASKS_JSON%"
-powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'; $content = Get-Content -Raw '%TASKS_JSON%'; $content = $content -replace '\"gamePath\": \".*\",', ('\"gamePath\": \"' + $path + '\",'); $content = $content.Trim(); Set-Content '%TASKS_JSON%' $content"
+powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'; $path = $path -replace '\\', '\\'; $content = Get-Content -Raw '%TASKS_JSON%'; $content = $content -replace '\"gamePath\": \".*\",', ('\"gamePath\": \"' + $path + '\",'); $content = $content.Trim(); Set-Content '%TASKS_JSON%' $content"
 
 echo ^Done!
 goto :done
 
+:error_msg
+    powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show(@\"!\n!!ERROR_MSG!!\n!\"@).ToString(); ''"
+
 :error
-if not "%ERROR_MSG%" == "" (
-    powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show('!ERROR_MSG!').ToString(); ''"
-)
-echo Exiting...
-exit /b 1
+    echo ^[ERROR] Exiting...
+    exit /b 1
 
 :done
