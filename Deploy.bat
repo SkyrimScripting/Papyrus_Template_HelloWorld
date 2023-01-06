@@ -1,6 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: TODO - make this complain if you haven't run Setup.bat
+:: and ask if you wanna run Setup.bat
+
 :: [Deploy.bat] - Copy mod files into Skyrim Data/ folder OR your Mods/ folder
 
 set FILES_TO_COPY=HelloPapyrus.esp

@@ -1,7 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: TODO update to use UI
+:: TODO - make this complain if you haven't run Setup.bat
+:: and ask if you wanna run Setup.bat
 
 :: [Compile.bat] - Compile Papyrus scripts!
  

@@ -1,6 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: TODO - make this complain if you haven't run Setup.bat
+:: and ask if you wanna run Setup.bat
+
 :: [Package.bat] - .Zip up mod files for sharing and distribution
 
 set MOD_NAME=
