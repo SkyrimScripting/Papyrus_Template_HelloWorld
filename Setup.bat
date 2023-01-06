@@ -186,7 +186,7 @@ if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
 
 :: Get a name for this mod!
 if "%MOD_NAME%" == "" (
-    echo ^... Getting mod name from user input ...
+    echo ^[INPUT] Getting mod name from user input ...
     for /f "usebackq delims=" %%i in (`
         powershell -c "Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox(\"Enter a name for your mod!`n`nThis is used to name the folder your mod is output to.\", 'Name of mod', '%TEMPLATE_NAME%'); $result"
     `) do set MOD_NAME=%%i
@@ -290,7 +290,7 @@ echo Updating "%TASKS_JSON%"
 powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'; $path = $path -replace '\\', '\\'; $content = Get-Content -Raw '%TASKS_JSON%'; $content = $content -replace '\"gamePath\": \".*\",', ('\"gamePath\": \"' + $path + '\",'); $content = $content.Trim(); Set-Content '%TASKS_JSON%' $content"
 
 echo Updating "%SETUP_BAT%"
-powershell -Command "$content = Get-Content -Raw '%SETUP_BAT%'; $content = $content -replace ('set ' + 'CONFIGURED_MOD_NAME=.*'), ('set ' + 'CONFIGURED_MOD_NAME=%MOD_NAME%'); $content = $content -replace ('set ' + 'CONFIGURED_DEPLOY_TO=.*'), ('set ' + 'CONFIGURED_DEPLOY_TO=%DEPLOY_TO%'); $content = $content.Trim(); Set-Content '%SETUP_BAT%' $content"
+powershell -Command "$content = Get-Content -Raw '%SETUP_BAT%'; $content = $content -replace ('set ' + 'CONFIGURED_MOD_NAME=.*'), ('set ' + 'CONFIGURED_MOD_NAME=%MOD_NAME%'); $content = $content -replace ('set ' + 'CONFIGURED_DEPLOY_TO=.*'), ('set ' + 'CONFIGURED_DEPLOY_TO=%DEPLOY_TO%'); $content = $content.Trim(); Set-Content '%TEMP%/%SETUP_BAT%' $content"
 
 echo ^Done!
 goto :done
@@ -309,3 +309,5 @@ goto :done
     exit /b 1
 
 :done
+
+powershell -Command "Copy-Item -Path '%TEMP%/%SETUP_BAT%' -Destination %0" >nul
