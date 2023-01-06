@@ -157,7 +157,7 @@ The `Deploy.bat` script is automatically run by Visual Studio Code after each bu
 
 ## `Deploy.bat`
 
-Double-click on the `Deploy.bat` file in File Explorer and mod files will be copies to the destination configured by `Setup.bat`.
+Double-click on the `Deploy.bat` file in File Explorer and mod files will be copied to the destination configured by `Setup.bat`
 
 # Personalize the `.esp` Plugin File
 
