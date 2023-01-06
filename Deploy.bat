@@ -1,4 +1,5 @@
 @echo off
+setlocal EnableDelayedExpansion
 
 :: [Deploy.bat] - Copy mod files into Skyrim Data/ folder OR your Mods/ folder
 
@@ -8,7 +9,7 @@ set FOLDERS_TO_COPY=Scripts
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 set ALWAYS_DELETE_FIRST=true
-set MOD_OUTPUT_FOLDER=C:\Users\mrowr\AppData\Local\ModOrganizer\Skyrim Special Edition\mods\kjdskljfdls
+set MOD_OUTPUT_FOLDER=C:\Awesome\Location
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deploy.bat script code below

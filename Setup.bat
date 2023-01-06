@@ -1,6 +1,9 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+set CONFIGURED_MOD_NAME=Hello there how are you
+set CONFIGURED_DEPLOY_TO=C:\Awesome\Location
+
 :: [Setup.bat] - Initialize Papyrus project template
 
 :: (Optional)
@@ -13,6 +16,8 @@ set PPJ=Scripts.ppj
 set COMPILE_BAT=Compile.bat
 set DEPLOY_BAT=Deploy.bat
 set GENERATE_PLUGIN_BAT=GeneratePlugin.bat
+set PACKAGE_BAT=Package.bat
+set SETUP_BAT=Setup.bat
 set TASKS_JSON=.vscode/tasks.json
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -21,6 +26,8 @@ set TASKS_JSON=.vscode/tasks.json
 :: - <project root>/Compile.bat
 :: - <project root>/Deploy.bat
 :: - <project root>/GeneratePlugin.bat
+:: - <project root>/Package.bat
+:: - <project root>/Setup.bat
 :: - <project root>/Scripts.ppj
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -28,6 +35,8 @@ set TASKS_JSON=.vscode/tasks.json
 :: Setup.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
+set MOD_NAME=%CONFIGURED_MOD_NAME%
+set DEPLOY_TO=%CONFIGURED_DEPLOY_TO%
 set PAPYRUS_COMPILER_PATH=Papyrus Compiler/PapyrusCompiler.exe
 
 :: For newlines in PowerShell commands
@@ -176,78 +185,85 @@ if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
 )
 
 :: Get a name for this mod!
-echo ^... Getting mod name from user input ...
-for /f "usebackq delims=" %%i in (`
-    powershell -c "Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox(\"Enter a name for your mod!`n`nThis is used to name the folder your mod is output to.\", 'Name of mod', '%TEMPLATE_NAME%'); $result"
-`) do set MOD_NAME=%%i
-
 if "%MOD_NAME%" == "" (
-    echo ^Setup canceled...
-    goto :error
+    echo ^... Getting mod name from user input ...
+    for /f "usebackq delims=" %%i in (`
+        powershell -c "Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox(\"Enter a name for your mod!`n`nThis is used to name the folder your mod is output to.\", 'Name of mod', '%TEMPLATE_NAME%'); $result"
+    `) do set MOD_NAME=%%i
+    if "!MOD_NAME!" == "" (
+        echo ^Setup canceled...
+        goto :error
+    ) else (
+        echo ^Mod name: !MOD_NAME!
+    )
 ) else (
     echo ^Mod name: %MOD_NAME%
+    echo ^[NOTE] Change CONFIGURED_MOD_NAME in Setup.bat to clear the currently configured MOD_NAME
 )
 
-set DEPLOY_TO=
-
-:: How would they like to 'Deploy' this mod's .esp, scripts, etc?
-set MSGBOX_MSG=^Would you like to automatically copy this mod into your Skyrim folder [or MO2/Vortex mods folder] whenever you compile the mod?
-set MSGBOX_MSG=^!MSGBOX_MSG!`n`nSelect 'Yes' for additional options
-for /f "usebackq delims=" %%i in (`
-    powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
-`) do set MSGBOX_RESULT=%%i
-if "!MSGBOX_RESULT!" == "Yes" (
-    set CONFIGURING_DEPLOY=true
-    if not "%SKYRIM_MODS_FOLDER%" == "" (
-        if exist "%SKYRIM_MODS_FOLDER%" (
-            set MSGBOX_MSG=^Detected configured SKYRIM_MODS_FOLDER
-            set MSGBOX_MSG=^!MSGBOX_MSG!`n`n%SKYRIM_MODS_FOLDER%\%MOD_NAME%
-            set MSGBOX_MSG=^!MSGBOX_MSG!`n`nWould you like to copy mod files here automatically?
+if "%DEPLOY_TO%" == "" (
+    :: How would they like to 'Deploy' this mod's .esp, scripts, etc?
+    set MSGBOX_MSG=^Would you like to automatically copy this mod into your Skyrim folder [or MO2/Vortex mods folder] whenever you compile the mod?
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nSelect 'Yes' for additional options
+    for /f "usebackq delims=" %%i in (`
+        powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+    `) do set MSGBOX_RESULT=%%i
+    if "!MSGBOX_RESULT!" == "Yes" (
+        set CONFIGURING_DEPLOY=true
+        if not "%SKYRIM_MODS_FOLDER%" == "" (
+            if exist "%SKYRIM_MODS_FOLDER%" (
+                set MSGBOX_MSG=^Detected configured SKYRIM_MODS_FOLDER
+                set MSGBOX_MSG=^!MSGBOX_MSG!`n`n%SKYRIM_MODS_FOLDER%\%MOD_NAME%
+                set MSGBOX_MSG=^!MSGBOX_MSG!`n`nWould you like to copy mod files here automatically?
+                for /f "usebackq delims=" %%i in (`
+                    powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+                `) do set MSGBOX_RESULT=%%i
+                if "!MSGBOX_RESULT!" == "Yes" (
+                    echo ^[CONFIG] Deploy to "%SKYRIM_MODS_FOLDER%\%MOD_NAME%"
+                    set DEPLOY_TO=%SKYRIM_MODS_FOLDER%\%MOD_NAME%
+                )
+            )
+        )
+    )
+    if "!CONFIGURING_DEPLOY!" == "true" (
+        if "!DEPLOY_TO!" == "" (
+            set MSGBOX_MSG=^Would you like to automatically copy mod files into your Skyrim Data folder?
+            set MSGBOX_MSG=^!MSGBOX_MSG!`n`n%SKYRIM_FOLDER%
             for /f "usebackq delims=" %%i in (`
                 powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
             `) do set MSGBOX_RESULT=%%i
             if "!MSGBOX_RESULT!" == "Yes" (
-                echo ^[CONFIG] Deploy to "%SKYRIM_MODS_FOLDER%\%MOD_NAME%"
-                set DEPLOY_TO=%SKYRIM_MODS_FOLDER%\%MOD_NAME%
+                echo ^[CONFIG] Deploy to "%SKYRIM_FOLDER%\Data"
+                set DEPLOY_TO=%SKYRIM_FOLDER%\Data
             )
         )
     )
-)
-if "%CONFIGURING_DEPLOY%" == "true" (
-    if "%DEPLOY_TO%" == "" (
-        set MSGBOX_MSG=^Would you like to automatically copy mod files into your Skyrim Data folder?
-        set MSGBOX_MSG=^!MSGBOX_MSG!`n`n%SKYRIM_FOLDER%
-        for /f "usebackq delims=" %%i in (`
-            powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
-        `) do set MSGBOX_RESULT=%%i
-        if "!MSGBOX_RESULT!" == "Yes" (
-            echo ^[CONFIG] Deploy to "%SKYRIM_FOLDER%\Data"
-            set DEPLOY_TO=%SKYRIM_FOLDER%\Data
-        )
-    )
-)
-if "%CONFIGURING_DEPLOY%" == "true" (
-    if "%DEPLOY_TO%" == "" (
-        set MSGBOX_MSG=^Would you like to specify a custom output location? 
-        for /f "usebackq delims=" %%i in (`
-            powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
-        `) do set MSGBOX_RESULT=%%i
-        if "!MSGBOX_RESULT!" == "Yes" (
+    if "!CONFIGURING_DEPLOY!" == "true" (
+        if "!DEPLOY_TO!" == "" (
+            set MSGBOX_MSG=^Would you like to specify a custom output location? 
             for /f "usebackq delims=" %%i in (`
-                powershell -c "Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox(\"Mod output folder\", 'Output location', ''); $result"
-            `) do set OUTPUT_FOLDER=%%i
-            if "!OUTPUT_FOLDER!" == "" (
-                echo ^[CANCEL] Output folder not provided
-                goto :cancel
+                powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+            `) do set MSGBOX_RESULT=%%i
+            if "!MSGBOX_RESULT!" == "Yes" (
+                for /f "usebackq delims=" %%i in (`
+                    powershell -c "Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox(\"Mod output folder\", 'Output location', ''); $result"
+                `) do set OUTPUT_FOLDER=%%i
+                if "!OUTPUT_FOLDER!" == "" (
+                    echo ^[CANCEL] Output folder not provided
+                    goto :cancel
+                ) else (
+                    echo ^[CONFIG] Deploy to "!OUTPUT_FOLDER!"
+                    set DEPLOY_TO=!OUTPUT_FOLDER!
+                )
             ) else (
-                echo ^[CONFIG] Deploy to "!OUTPUT_FOLDER!"
-                set DEPLOY_TO=!OUTPUT_FOLDER!
+                echo ^[CANCEL] No output option selected
+                goto :cancel
             )
-        ) else (
-            echo ^[CANCEL] No output option selected
-            goto :cancel
         )
     )
+) else (
+    echo ^[CONFIG] Deploy to "!DEPLOY_TO!"
+    echo ^[NOTE] Change CONFIGURED_DEPLOY_TO in Setup.bat to clear the currently configured DEPLOY_TO
 )
 
 echo Updating "%PPJ%"
@@ -266,6 +282,12 @@ if not "%DEPLOY_TO%" == "" (
 
 echo Updating "%GENERATE_PLUGIN_BAT%"
 powershell -Command "$content = Get-Content -Raw '%GENERATE_PLUGIN_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $prefix = '%MOD_NAME%'; $prefix = $prefix -replace '[^a-zA-Z0-9]', ''; $content = $content -replace 'set MOD_PREFIX=.*', \"set MOD_PREFIX=${prefix}\"; $content = $content.Trim(); Set-Content '%GENERATE_PLUGIN_BAT%' $content"
+
+echo Updating "%PACKAGE_BAT%"
+powershell -Command "$content = Get-Content -Raw '%PACKAGE_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $content = $content.Trim(); Set-Content '%PACKAGE_BAT%' $content"
+
+echo Updating "%SETUP_BAT%"
+powershell -Command "$content = Get-Content -Raw '%SETUP_BAT%'; $content = $content -replace ('set ' + 'CONFIGURED_MOD_NAME=.*'), ('set ' + 'CONFIGURED_MOD_NAME=%MOD_NAME%'); $content = $content -replace ('set ' + 'CONFIGURED_DEPLOY_TO=.*'), ('set ' + 'CONFIGURED_DEPLOY_TO=%DEPLOY_TO%'); $content = $content.Trim(); Set-Content '%SETUP_BAT%' $content"
 
 echo Updating "%TASKS_JSON%"
 powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'; $path = $path -replace '\\', '\\'; $content = Get-Content -Raw '%TASKS_JSON%'; $content = $content -replace '\"gamePath\": \".*\",', ('\"gamePath\": \"' + $path + '\",'); $content = $content.Trim(); Set-Content '%TASKS_JSON%' $content"
