@@ -1,5 +1,0 @@
-hello
-wassup XXX bar
-world
-
-powershell Get-Content -Raw Replace.txt | % { $_ -replace "foo", "XXX" } | Set-Variable x; Set-Content Replace.txt $x
