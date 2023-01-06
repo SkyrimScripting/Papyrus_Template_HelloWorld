@@ -19,9 +19,8 @@ set FOLDERS_TO_COPY=Scripts
 )
 
 if "%MOD_OUTPUT_FOLDER%" == "" (
-    set ERROR_MSG=^[ERROR] Output destination not configured.
-    set ERROR_MSG=^!ERROR_MSG!`n`nPlease run Setup.bat
-    goto :error_msg
+    echo ^No deploy location configured
+    goto :done
 )
 
 echo ^[DEPLOY TO] "%MOD_OUTPUT_FOLDER%"
