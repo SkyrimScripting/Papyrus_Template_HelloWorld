@@ -49,7 +49,7 @@ You need to install the [Bethesda Skyrim Creation Kit](https://store.steampowere
 
 ### Installing Creation Kit
 
-The Creation Kit comes with the **Papyrus compiler** and _required_ [game scripts](#install-creation-kit-papyrus-scripts).
+The Creation Kit comes with the **Papyrus compiler** and _required_ game scripts.
 
 If you have either Skyrim, Skyrim Special Edition, or Skyrim Anniversary Edition, then the **Creation Kit** will be available in **Steam**.
 
