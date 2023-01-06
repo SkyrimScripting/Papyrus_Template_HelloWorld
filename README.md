@@ -22,6 +22,7 @@ The simplest possible Papyrus plugin for Skyrim.
       - [Copying Files](#copying-files)
   - [Project setup](#project-setup)
     - [`Setup.bat` Setup Script](#setupbat-setup-script)
+- [Updating Docs Below Here Still :)](#updating-docs-below-here-still-)
     - [Doing it manually](#doing-it-manually)
   - [Compiling the project](#compiling-the-project)
     - [Visual Studio Code (_Recommended_)](#visual-studio-code-recommended)
@@ -186,6 +187,10 @@ C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition
 ### `Setup.bat` Setup Script
 
 After installing ...
+
+---
+
+# Updating Docs Below Here Still :)
 
 ---
 
