@@ -61,11 +61,11 @@ If you have either Skyrim, Skyrim Special Edition, or Skyrim Anniversary Edition
 
 [Skyrim Special Edition: Creation Kit](https://store.steampowered.com/app/1946180/Skyrim_Special_Edition_Creation_Kit/) appears under **`Software`** if you have [Skyrim Special Edition](https://store.steampowered.com/app/489830/The_Elder_Scrolls_V_Skyrim_Special_Edition/) (_or "[Skyrim Anniverary Edition](https://store.steampowered.com/sub/626153/)"_)  :
 
-> <img title="Skyrim Special Edition: Creation Kit" alt="Skyrim Special Edition: Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitSE.png" height=100 />
+> <img title="Skyrim Special Edition: Creation Kit" alt="Skyrim Special Edition: Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitSE.png" height=150 />
 
 If you have the old [The Elder Scrolls V: Skyrim](https://store.steampowered.com/app/72850/The_Elder_Scrolls_V_Skyrim/) (_"Legendary Edition"_) of Skyrim on Steam, Creation Kit appears under **`Tools`**:
 
-<img title="Skyrim Creation Kit" alt="Skyrim Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png" height=100 />
+<img title="Skyrim Creation Kit" alt="Skyrim Creation Kit" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Stream/SkyrimCreationKitLE.png" height=120 />
 
 ### Install Creation Kit Papyrus Scripts
 
@@ -115,11 +115,11 @@ In your mod manager, find the location of your `mods` folder.
 
 #### MO2
 
-<img title="MO2 Mods folder" alt="MO2 Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/MO2/MO2SettingsModsFolder.png" height=100 />
+<img title="MO2 Mods folder" alt="MO2 Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/MO2/MO2SettingsModsFolder.png" height=150 />
 
 #### Vortex
 
-<img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" height=100 />
+<img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" height=150 />
 
 Take this template and place it inside of the `mods` folder.
 
