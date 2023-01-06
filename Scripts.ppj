@@ -26,7 +26,7 @@
                    configured with Setup.bat after each build,
                    set UseInBuild="true"
     -->
-    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
+    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="true">
         <Command>Deploy.bat</Command>
     </PostBuildEvent>
 
