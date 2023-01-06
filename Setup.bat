@@ -19,7 +19,7 @@ set TEMPLATE_NAME=Hello World
 set PPJ=Scripts.ppj
 set COMPILE_BAT=Compile.bat
 set DEPLOY_BAT=Deploy.bat
-set GENERATE_PLUGIN_BAT=GeneratePlugin.bat
+set PERSONALIZE_BAT=Personalize.bat
 set PACKAGE_BAT=Package.bat
 set SETUP_BAT=Setup.bat
 set TASKS_JSON=.vscode/tasks.json
@@ -269,8 +269,8 @@ if not "%DEPLOY_TO%" == "" (
     powershell -Command "$content = Get-Content -Raw '%DEPLOY_BAT%'; $content = $content -replace 'set MOD_OUTPUT_FOLDER=.*', 'set MOD_OUTPUT_FOLDER=%DEPLOY_TO%'; $content = $content.Trim(); Set-Content '%DEPLOY_BAT%' $content"
 )
 
-echo Updating "%GENERATE_PLUGIN_BAT%"
-powershell -Command "$content = Get-Content -Raw '%GENERATE_PLUGIN_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $prefix = '%MOD_NAME%'; $prefix = $prefix -replace '[^a-zA-Z0-9]', ''; $content = $content -replace 'set MOD_PREFIX=.*', \"set MOD_PREFIX=${prefix}\"; $content = $content.Trim(); Set-Content '%GENERATE_PLUGIN_BAT%' $content"
+echo Updating "%PERSONALIZE_BAT%"
+powershell -Command "$content = Get-Content -Raw '%PERSONALIZE_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $prefix = '%MOD_NAME%'; $prefix = $prefix -replace '[^a-zA-Z0-9]', ''; $content = $content -replace 'set MOD_PREFIX=.*', \"set MOD_PREFIX=${prefix}\"; $content = $content.Trim(); Set-Content '%PERSONALIZE_BAT%' $content"
 
 echo Updating "%PACKAGE_BAT%"
 powershell -Command "$content = Get-Content -Raw '%PACKAGE_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $content = $content.Trim(); Set-Content '%PACKAGE_BAT%' $content"

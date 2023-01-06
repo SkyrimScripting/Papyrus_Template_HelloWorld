@@ -4,7 +4,7 @@ setlocal EnableDelayedExpansion
 set MOD_NAME=
 set MOD_PREFIX=
 
-:: [GeneratePlugin.bat] - Create your own .esp (from existing template .esp)
+:: [Personalize.bat] - Create your own .esp (from existing template .esp)
 
 :: Requires bethkit.exe to be extracted to you computer and added to your PATH
 :: https://www.nexusmods.com/skyrim/mods/101736/
@@ -24,7 +24,7 @@ set variable_desc[1]="Quest Script Name"
 set variable_name[1]=HelloPapyrus
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: GeneratePlugin.bat code below
+:: Personalize.bat code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 set MSGBOX_TITLE=Generate .esp Plugin
