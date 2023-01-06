@@ -1,4 +1,7 @@
 @echo off
+setlocal EnableDelayedExpansion
+
+:: TODO update to use UI
 
 :: [Compile.bat] - Compile Papyrus scripts!
  
@@ -43,6 +46,8 @@ if %ERRORLEVEL% == 0 (
     echo ^[NOT FOUND] pyro
     echo ^Falling back to PapyrusCompiler.exe...
 )
+
+goto :done
 
 :: Check for PapyrusCompiler.exe
 where /q PapyrusCompiler
@@ -103,8 +108,11 @@ if exist "%SKYRIM_FOLDER%\Data\Source\Scripts" (
 
 "%PAPYRUS_COMPILER%" %SCRIPTS_FOLDER% -all -f=TESV_Papyrus_Flags.flg -o=%OUTPUT_FOLDER% -i="%COMPILER_INCLUDES%"
 
+:error_msg
+    powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show(@\"!\n!!ERROR_MSG!!\n!\"@).ToString(); ''"
+
 :error
-exit /b 1
-pause
+    echo ^[ERROR] Exiting...
+    exit /b 1
 
 :done

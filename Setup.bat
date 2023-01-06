@@ -1,9 +1,6 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: During testing:
-cls
-
 :: [Setup.bat] - Initialize Papyrus project template
 
 :: (Optional)
@@ -205,6 +202,10 @@ powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'
 
 echo ^Done!
 goto :done
+
+:: TODO - ask them if they wanna Generate Script
+:: TODO - ask them if they wanna Compile
+:: TODO - ask them if they wanna Deploy
 
 :error_msg
     powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show(@\"!\n!!ERROR_MSG!!\n!\"@).ToString(); ''"

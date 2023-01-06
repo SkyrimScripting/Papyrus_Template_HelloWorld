@@ -1,7 +1,10 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: TODO - Show errors in popup boxes (nicer UX when double-clicking from folder)
+:: for testing... TODO remove cls
+cls
+
+:: TODO - update .esp to be ESPFE ESL flagged
 
 :: [GeneratePlugin.bat] - Create your own .esp (from existing template .esp)
 ::
@@ -9,13 +12,13 @@ setlocal EnableDelayedExpansion
 :: https://www.nexusmods.com/skyrim/mods/101736/
 ::
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: HelloPapyrus.esp Replacements
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
 set TEMPLATE_NAME=HelloPapyrus
 set TEMPLATE_ESX=%TEMPLATE_NAME%.esx
 set TEMPLATE_ESP=%TEMPLATE_NAME%.esp
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Replacements for this template's .esp plugin
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 set variable_desc[0]="Quest Name"
 set variable_name[0]=EXAMPLEMOD_Quest
@@ -24,75 +27,98 @@ set variable_desc[1]="Quest Script Name"
 set variable_name[1]=HelloPapyrus
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: GeneratePlugin.bat code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-:: for testing... TODO remove cls
-cls
+set DEFAULT_MOD_PREFIX=MyMod
+set MSGBOX_TITLE=Generate .esp Plugin
 
+:: For newlines in PowerShell commands
+(set \n=^
+%=Do not remove this line=%
+)
+
+echo ^[SEARCH] bethkit.exe
 where /q bethkit
 if not %ERRORLEVEL% == 0 (
-    echo ^[ERROR] bethkit was not found
-    echo.
-    echo ^Please download from https://www.nexusmods.com/skyrim/mods/101736
-    echo.
-    echo ^After downloading:
-    echo ^- extract the downloaded archive somewhere
-    echo ^- copy the full path to the FOLDER where you extracted [folder should contain bethkit.exe]
-    echo ^- then open the start menu and type 'Edit environment variables for your account'
-    echo ^- then double-click the Path variable under 'User variables for [your account]'
-    echo ^- then click New
-    echo ^- then paste the full path to the FOLDER where bethkit.exe was extracted
-    echo ^- then run this command again
-    echo.
-    echo ^If you ran this command from a command prompt or terminal, you need to
-    echo ^close it and open a new one before bethkit.exe will be found.
-    GOTO :error
+    set MSGBOX_MSG=^[ERROR] bethkit was not found
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nPlease download from https://www.nexusmods.com/skyrim/mods/101736
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nAfter downloading:
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- extract the downloaded archive somewhere
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- copy the full path to the FOLDER where you extracted [folder should contain bethkit.exe]
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- then open the start menu and type 'Edit environment variables for your account'
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- then double-click the Path variable under 'User variables for [your account]'
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- then click New
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- then paste the full path to the FOLDER where bethkit.exe was extracted
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n- then run this command again
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nIf you ran this command from a command prompt or terminal, you
+    set MSGBOX_MSG=^!MSGBOX_MSG!`nneed toclose it and open a new one before bethkit.exe will be found.
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nSelect 'Yes' to open the Bethesda Toolkit page on Nexus
+    for /f "usebackq delims=" %%i in (`
+        powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+    `) do set MSGBOX_RESULT=%%i
+    if "!MSGBOX_RESULT!" == "Yes" (
+        echo ^[OPEN URL] https://www.nexusmods.com/skyrim/mods/101736?tab=files
+        START https://www.nexusmods.com/skyrim/mods/101736?tab=files
+    )
+    goto :done
 )
 
-echo ^Generating new Skyrim plugin...
-
+echo ^[PROMPT] Mod Prefix
 for /f "usebackq delims=" %%i in (`
-  powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox('Enter your mod name (no spaces, must start with a letter, only a-z A-Z 0-9 characters allowed)', 'Create Skyrim Mod', 'MYMOD')"
-`) do set MOD_NAME=%%i
-if [%MOD_NAME%] == [] (
-    echo ^No mod name provided.
-    GOTO :error
+  powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox(\"Enter a short prefix for Quest/Script names etc`n`n[no spaces]`n[must start with a letter]`n[only a-z A-Z 0-9 characters allowed]`n`ne.g. If your mod is called 'Cool Amazing Things', maybe your would use 'COOL' or 'CLMAZ' or 'CoolAmazing'.`n`nSome modders use their initials, e.g. 'MPCool'.`n`nThis prefix is used to help keep your Quest/Script/etc names distinct from other mods [they must have unique names]\", '%MSGBOX_TITLE%', '%DEFAULT_MOD_PREFIX%')"
+`) do set MOD_PREFIX=%%i
+if [%MOD_PREFIX%] == [] (
+    echo ^[CANCEL] No mod prefix provided.
+    goto :cancel
 ) else (
-    echo ^Mod name: "%MOD_NAME%"
+    echo ^[INFO] Mod Prefix: "%MOD_PREFIX%"
 )
 
-set ESX=%MOD_NAME%.%TEMPLATE_NAME%.esx
-set ESP=%MOD_NAME%.%TEMPLATE_NAME%.esp
+set ESX=%MOD_PREFIX%.%TEMPLATE_NAME%.esx
+set ESP=%MOD_PREFIX%.%TEMPLATE_NAME%.esp
 
 if exist "%ESP%" (
-    echo ^.esp already exists for this mod: "%ESP%"
-    echo ^Please delete this file or choose a new mod name.
-    echo ^We don't override files here, sorry!
-    GOTO :error
+    set MSGBOX_MSG=^.esp already exists for this mod: %ESP%
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nWould you like to overwrite this file?
+    for /f "usebackq delims=" %%i in (`
+        powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+    `) do set MSGBOX_RESULT=%%i
+    if "!MSGBOX_RESULT!" == "Yes" (
+        echo ^[DELETE] %ESP%
+    ) else (
+        echo ^[CANCEL]
+        goto :cancel
+    )
 )
 if exist "%ESX%" (
-    echo ^.esx already exists for this mod: "%ESX%"
-    echo ^Please delete this file or choose a new mod name.
-    echo ^We don't override files here, sorry!
-    GOTO :error
+    set MSGBOX_MSG=^.esx already exists for this mod: %ESX%
+    set MSGBOX_MSG=^!MSGBOX_MSG!`n`nWould you like to overwrite this file?
+    for /f "usebackq delims=" %%i in (`
+        powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+    `) do set MSGBOX_RESULT=%%i
+    if "!MSGBOX_RESULT!" == "Yes" (
+        echo ^[DELETE] %ESX%
+    ) else (
+        echo ^[CANCEL]
+        goto :cancel
+    )
 )
 
 if not exist "%ESX%" (
     if exist "%TEMPLATE_ESX%" (
-        echo ^Template .esx exists "%TEMPLATE_ESX%"
-        echo ^Creating a copy "%ESX%"
+        echo ^[COPY] "%TEMPLATE_ESX%" "%ESX%"
         xcopy "%TEMPLATE_ESX%" "%ESX%*"
     ) else (
-        echo "Creating %ESX% from %TEMPLATE_ESP%"
         if not exist "%TEMPLATE_ESP%" (
-            echo ^[ERROR] No .esp file found to generate an .esx from "%TEMPLATE_ESP%"
-            GOTO :error
+            set ERROR_MSG=^[ERROR] No .esp file found to generate an .esx from "%TEMPLATE_ESP%"
+            goto :error_msg
         )
-        echo ^bethkit convert "%TEMPLATE_ESP%" "%ESX%"
+        echo ^[CONVERT] "%TEMPLATE_ESP%" to "%ESX"
         bethkit convert "%TEMPLATE_ESP%" "%ESX%"
         if not exist "%ESX%" (
-            echo ^[ERROR] There was a problem generating .esx from .esp "%TEMPLATE_ESP%"
-            GOTO :error
+            set ERROR_MSG=^[ERROR] There was a problem generating .esx from .esp "%TEMPLATE_ESP%"
+            goto :error_msg
         )
     )
 )
@@ -101,35 +127,30 @@ set length=0
 :variable_size_loop
 if defined variable_desc[%length%] ( 
    set /a "length+=1"
-   GOTO :variable_size_loop 
+   goto :variable_size_loop 
 )
 set /a "length-=1"
 
-echo ^Performing replacements in .esx "%ESX%"
+echo ^[REPLACE] Performing replacements in .esx "%ESX%"
 for /L %%i in (0,1,%length%) do (
     for /L %%i in (0,1,%length%) do (
         if "!variable_value[%%i]!" == "$CANCEL$" (
-            echo ^Canceled
+            echo ^[CANCEL]
+            echo ^[DELETE] "%ESX%"
             del "%ESX%"
-            GOTO :error
+            goto :cancel
         )
     )
-    @REM for /F "tokens=2 delims==" %%x in ('set variable_value[') do (
-    @REM     if "%%x" == "$CANCEL$" (
-    @REM         echo ^Canceled
-    @REM         del "%ESX%"
-    @REM         GOTO :error
-    @REM     )
-    @REM )
     for /f "usebackq delims=" %%x in (`
-        powershell -Command "$varname = '%%variable_name[%%i]%%' -replace 'EXAMPLEMOD_', ''; Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox('Set name for %%variable_desc[%%i]%%', '%%variable_desc[%%i]%%', \"%MOD_NAME%_${varname}\"); if (-Not $result) { $result = '$CANCEL$'; }; $result"
+        powershell -Command "$varname = '%%variable_name[%%i]%%' -replace 'EXAMPLEMOD_', ''; Add-Type -AssemblyName Microsoft.VisualBasic; $result = [Microsoft.VisualBasic.Interaction]::InputBox('Set name for %%variable_desc[%%i]%%', '%%variable_desc[%%i]%%', \"%MOD_PREFIX%_${varname}\"); if (-Not $result) { $result = '$CANCEL$'; }; $result"
     `) do set variable_value[%%i]=%%x
 )
 for /L %%i in (0,1,%length%) do (
     if "!variable_value[%%i]!" == "$CANCEL$" (
-        echo ^Canceled
+        echo ^[CANCEL]
+        echo ^[DELETE] "%ESX%"
         del "%ESX%"
-        GOTO :error
+        goto :cancel
     )
 )
 
@@ -137,26 +158,47 @@ for /L %%i in (0,1,%length%) do (
     call echo %%variable_desc[%%i]%%
     call echo %%variable_name[%%i]%%
     call echo %%variable_value[%%i]%%
-    call echo Updating "%ESX%" "%%variable_desc[%%i]%%" Replacing "%%variable_name[%%i]%%" with "%%variable_value[%%i]%%"
+    call echo ^[UPDATE] "%ESX%" "%%variable_desc[%%i]%%" Replacing "%%variable_name[%%i]%%" with "%%variable_value[%%i]%%"
     call powershell -Command "$content = Get-Content -Raw '%ESX%'; $content = $content -replace '%%variable_name[%%i]%%', '%%variable_value[%%i]%%'; $content = $content.Trim(); Set-Content '%ESX%' $content"
 )
 
-echo ^Converting "%ESX%" into an "%ESP"
+echo ^[CONVERT] "%ESX%" into an "%ESP"
 echo ^bethkit convert "%ESX%" "%ESP%"
 bethkit convert "%ESX%" "%ESP%"
 if not exist "%ESP%" (
     echo ^[ERROR] There was a problem generating .esp from .esx "%ESX%"
-    GOTO :error
+    goto :error
 )
 
-echo ^Cleaning up. Deleting .esx "%ESX%"
+echo ^[DELETE] "%ESX%"
 del "%ESX%"
 
+echo ^[PROMPT] Overwrite Template
+set MSGBOX_MSG=^Generated %ESP%!
+set MSGBOX_MSG=^!MSGBOX_MSG!`n`nWould you like to overwrite the original %TEMPLATE_ESP%?
+for /f "usebackq delims=" %%i in (`
+    powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"!MSGBOX_MSG!\", '%MSGBOX_TITLE%', 'YesNo').ToString()"
+`) do set MSGBOX_RESULT=%%i
+if "!MSGBOX_RESULT!" == "Yes" (
+    echo ^[DELETE] %TEMPLATE_ESP%
+    del "%TEMPLATE_ESP%"
+    echo ^[COPY] %ESP% to %TEMPLATE_ESP%
+    xcopy "%ESP%" "%TEMPLATE_ESP%"*
+    echo ^[DELETE] %ESP%
+    del "%ESP%"
+)
+
 echo ^Done!
-GOTO :done
+goto :done
+
+:error_msg
+    powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show(@\"!\n!!ERROR_MSG!!\n!\"@).ToString(); ''"
 
 :error
-exit /b 1
-pause
+    echo ^[ERROR] Exiting...
+    exit /b 1
+
+:cancel
+    exit /b 1
 
 :done
