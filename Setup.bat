@@ -286,11 +286,11 @@ powershell -Command "$content = Get-Content -Raw '%GENERATE_PLUGIN_BAT%'; $conte
 echo Updating "%PACKAGE_BAT%"
 powershell -Command "$content = Get-Content -Raw '%PACKAGE_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $content = $content.Trim(); Set-Content '%PACKAGE_BAT%' $content"
 
-echo Updating "%SETUP_BAT%"
-powershell -Command "$content = Get-Content -Raw '%SETUP_BAT%'; $content = $content -replace ('set ' + 'CONFIGURED_MOD_NAME=.*'), ('set ' + 'CONFIGURED_MOD_NAME=%MOD_NAME%'); $content = $content -replace ('set ' + 'CONFIGURED_DEPLOY_TO=.*'), ('set ' + 'CONFIGURED_DEPLOY_TO=%DEPLOY_TO%'); $content = $content.Trim(); Set-Content '%SETUP_BAT%' $content"
-
 echo Updating "%TASKS_JSON%"
 powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'; $path = $path -replace '\\', '\\'; $content = Get-Content -Raw '%TASKS_JSON%'; $content = $content -replace '\"gamePath\": \".*\",', ('\"gamePath\": \"' + $path + '\",'); $content = $content.Trim(); Set-Content '%TASKS_JSON%' $content"
+
+echo Updating "%SETUP_BAT%"
+powershell -Command "$content = Get-Content -Raw '%SETUP_BAT%'; $content = $content -replace ('set ' + 'CONFIGURED_MOD_NAME=.*'), ('set ' + 'CONFIGURED_MOD_NAME=%MOD_NAME%'); $content = $content -replace ('set ' + 'CONFIGURED_DEPLOY_TO=.*'), ('set ' + 'CONFIGURED_DEPLOY_TO=%DEPLOY_TO%'); $content = $content.Trim(); Set-Content '%SETUP_BAT%' $content"
 
 echo ^Done!
 goto :done
