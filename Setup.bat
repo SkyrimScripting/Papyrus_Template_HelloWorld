@@ -75,14 +75,15 @@ if "%SKYRIM_FOLDER%" == "" (
         set ERROR_MSG=^!ERROR_MSG!`n`nRead this template README for more information.
         goto :error_msg
     ) else (
+        echo HELLO
         echo ^[REGISTRY] SteamPath: "%STEAM_FOLDER%"
         if exist "%SE_COMPILER_PATH%" (
-            set SKYRIM_FOLDER=%SE_GAME_PATH%
-            echo ^[FOUND] Skyrim SE with Creation Kit: %SE_GAME_PATH%
+            set SKYRIM_FOLDER="%SE_GAME_PATH%"
+            echo ^[FOUND] Skyrim SE with Creation Kit: "%SE_GAME_PATH%"
         ) else (
             if exist "%LE_COMPILER_PATH%" (
-                set SKYRIM_FOLDER=%LE_GAME_PATH%
-                echo ^[FOUND] Skyrim LE with Creation Kit: %LE_GAME_PATH%
+                set SKYRIM_FOLDER="%LE_GAME_PATH%"
+                echo ^[FOUND] Skyrim LE with Creation Kit: "%LE_GAME_PATH%""
             ) else (
                 set ERROR_MSG=^[ERROR] No Skyrim installation containing Creation Kit found
                 set ERROR_MSG=^!ERROR_MSG!`n!\n!Searched paths:
@@ -94,15 +95,20 @@ if "%SKYRIM_FOLDER%" == "" (
     )
 )
 
+:: Remove double quotes
+set SKYRIM_FOLDER=%SKYRIM_FOLDER:"=%
+
 :: Find out if your Creation Kit setup uses Data/Scripts/Source or Data/Source/Scripts for main game .psc script files
 echo ^[SEARCH] Searching for Skryim game scripts
 :: Check Source\Scripts
+echo ^[CHECK] "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%"
 if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
     echo ^[FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Source\Scripts"
     set DATA_SCRIPTS_FOLDER=Data\Source\Scripts
 ) else (
     echo ^[NOT FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Source\Scripts"
     :: Check Scripts\Source
+    echo ^[CHECK] "%SKYRIM_FOLDER%\Data\Scripts\Source\%VALIDATE_SCRIPTS_FOLDER_FILE%"
     if exist "%SKYRIM_FOLDER%\Data\Scripts\Source\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
         echo ^[FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Scripts\Source"
         set DATA_SCRIPTS_FOLDER=Data\Scripts\Source
@@ -113,12 +119,12 @@ if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
             echo ^[FOUND] Compressed Skyrim game scripts at "%SKYRIM_FOLDER%\Data\Scripts.zip"
             :: Do you want to extract Scripts.zip?
             for /f "usebackq delims=" %%i in (`
-                powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"Would you like to extract the Skyrim game scripts`ninto your Skyrim Data/ folder?`n`nThese scripts are required for this template to run.`n`nRecommended: Yes\", 'Extract Creation Kit Scripts.zip', 'YesNo').ToString()"
+                powershell -c "Add-Type -Assembly System.Windows.Forms; [System.Windows.Forms.MessageBox]::Show(\"It appears that your Skyrim Creation Kit game scripts have not been extracted into your Skyrim folder.`n`nWould you like to extract the Skyrim game scripts`ninto your Skyrim Data/ folder?`n`nThese scripts are required for this template to run.`n`nRecommended: Yes\", 'Extract Creation Kit Scripts.zip', 'YesNo').ToString()"
             `) do set MSGBOX_RESULT=%%i
             if "!MSGBOX_RESULT!" == "Yes" (
                 :: Let's extract Scripts.zip!
                 echo ^[EXTRACT] Extracting Scripts.zip
-                echo ^[RUN] powershell Expand-Archive %SKYRIM_FOLDER%\Data\Scripts.zip -DestinationPath %SKYRIM_FOLDER%\Data
+                echo ^[RUN] powershell Expand-Archive "%SKYRIM_FOLDER%\Data\Scripts.zip" -DestinationPath "%SKYRIM_FOLDER%\Data"
                 powershell -Command "& Expand-Archive -Force '%SKYRIM_FOLDER%\Data\Scripts.zip' -DestinationPath '%SKYRIM_FOLDER%\Data'"
                 if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
                     echo ^[FOUND] Skyrim game scripts in "%SKYRIM_FOLDER%\Data\Source\Scripts"
@@ -145,7 +151,7 @@ if exist "%SKYRIM_FOLDER%\Data\Source\Scripts\%VALIDATE_SCRIPTS_FOLDER_FILE%" (
                 ) else (
                     set ERROR_MSG=^[ERROR] Extracting Scripts.zip failed
                     set ERROR_MSG=^!ERROR_MSG!`n`nDid not find Skyrim game scripts in:
-                    set ERROR_MSG=^!ERROR_MSG!`n%SKYRIM_FOLDER%\Data\Source\Scripts
+                    set ERROR_MSG=^!ERROR_MSG!`n"%SKYRIM_FOLDER%\Data\Source\Scripts"
                     goto :error_msg
                 )
             ) else (
