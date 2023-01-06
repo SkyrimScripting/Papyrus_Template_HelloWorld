@@ -137,6 +137,8 @@ In [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extens
 
 Double-click on the `Compile.bat` file in File Explorer and files will compile.
 
+> Note: if you have [`pyro`](https://github.com/fireundubh/pyro/releases) downloaded and the containing folder added to your `PATH` environment variable, then `Compile.bat` will run your `.ppj` file(s) using `pyro`. Otherwise `Compile.bat` will run the native `PapyrusCompiler.exe`.
+
 # Copy mod files (_into Skyrim or mods folder_)
 
 If you did not place this template folder inside of your mods folder (_see: [Put this folder into your "Mods" folder (_Optional_)](#put-this-folder-into-your-mods-folder-optional)_), then you will need to copy mod files and compiled scripts every time that you make changes to them.
