@@ -2,10 +2,9 @@
 
     <!-- These variables simply help you organize your .ppj Papyrus project file -->
     <Variables>
-        <Variable Name="ModName" Value="HelloPapyrus" />
+        <Variable Name="ModName" Value="Hello World" />
         <Variable Name="SkyrimFolder" Value="c:/steam/steamapps/common/Skyrim Special Edition" />
         <Variable Name="DataScriptsFolder" Value="Data\Source\Scripts" />
-        <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
     </Variables>
 
     <!-- Papyrus files can load *other* Papyrus files -->
@@ -22,15 +21,13 @@
         <Folder>./Scripts/Source</Folder>
     </Folders>
     
-    <!-- Optional: if your project folder is not inside of your mods/ folder -->
-    <!-- then you can enable this to copy your script file and .esp into a mods/ folder -->
+    <!--
+        (Optional) Some Description Here.
+
+        Some info here.
+    -->
     <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="true">
-        <!-- Set UseInBuild="false" to UseInBuild="true" to enable this section -->
-        <Command>echo Output Folder: "@OutputFolder"</Command>
-        <!-- <Command>(if exist "@OutputFolder" rmdir /s /q "@OutputFolder")</Command>
-        <Command>mkdir "@OutputFolder"</Command>
-        <Command>xcopy /e .\Scripts\ "@OutputFolder\Scripts\"</Command>
-        <Command>xcopy @ModName.esp "@OutputFolder\@ModName.esp*"</Command> -->
+        <Command>Deploy.bat</Command>
     </PostBuildEvent>
 
 </PapyrusProject>

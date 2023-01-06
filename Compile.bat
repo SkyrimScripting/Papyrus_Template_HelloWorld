@@ -1,9 +1,9 @@
 @echo off
 
 :: [Compile.bat] - Compile Papyrus scripts!
-:: 
-:: You must have Creation Kit installed
-::
+ 
+:: > You must have Creation Kit installed
+
 :: Note: Unless you have pyro* installed and in your PATH,
 ::       this script *completely ignores* your Scripts.ppj file
 ::       and uses the Skyrim Papyrus Compiler *directly*.
@@ -12,7 +12,7 @@
 ::       Visual Studio Code (or the pyro command-line application)
 ::
 :: * pyro: https://github.com/fireundubh/pyro/releases
-::
+
 :: Note: the SKYRIM_FOLDER below is only used if you have
 ::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
 ::
