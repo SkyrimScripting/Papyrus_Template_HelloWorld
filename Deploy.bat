@@ -9,7 +9,7 @@ set FOLDERS_TO_COPY=Scripts
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 set ALWAYS_DELETE_FIRST=true
-set MOD_OUTPUT_FOLDER=C:\Awesome\Location
+set MOD_OUTPUT_FOLDER=
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deploy.bat script code below

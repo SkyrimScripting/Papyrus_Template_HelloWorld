@@ -3,7 +3,7 @@ setlocal EnableDelayedExpansion
 
 :: [Package.bat] - .Zip up mod files for sharing and distribution
 
-set MOD_NAME=Hello there how are you
+set MOD_NAME=
 set FILES_TO_COPY=HelloPapyrus.esp
 set FOLDERS_TO_COPY=Scripts
 

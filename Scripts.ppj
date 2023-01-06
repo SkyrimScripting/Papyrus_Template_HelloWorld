@@ -2,9 +2,9 @@
 
     <!-- These variables simply help you organize your .ppj Papyrus project file -->
     <Variables>
-        <Variable Name="ModName" Value="Hello there how are you" />
-        <Variable Name="SkyrimFolder" Value="c:/steam\steamapps\common\Skyrim Special Edition" />
-        <Variable Name="DataScriptsFolder" Value="Data\Scripts\Source" />
+        <Variable Name="ModName" Value="" />
+        <Variable Name="SkyrimFolder" Value="" />
+        <Variable Name="DataScriptsFolder" Value="" />
     </Variables>
 
     <!-- Papyrus files can load *other* Papyrus files
@@ -22,11 +22,11 @@
     </Folders>
     
     <!--
-        (Optional) Some Description Here.
-
-        Some info here.
+        (Optional) To automatically copy mod files into the destination you
+                   configured with Setup.bat after each build,
+                   set UseInBuild="true"
     -->
-    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="true">
+    <PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
         <Command>Deploy.bat</Command>
     </PostBuildEvent>
 

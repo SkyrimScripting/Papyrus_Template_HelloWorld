@@ -21,7 +21,7 @@ The simplest possible Papyrus plugin for Skyrim.
       - [`Scripts.ppj`](#scriptsppj)
       - [Copying Files](#copying-files)
   - [Project setup](#project-setup)
-    - [`Init.sh` Setup Script](#initsh-setup-script)
+    - [`Setup.bat` Setup Script](#setupbat-setup-script)
     - [Doing it manually](#doing-it-manually)
   - [Compiling the project](#compiling-the-project)
     - [Visual Studio Code (_Recommended_)](#visual-studio-code-recommended)
@@ -183,11 +183,11 @@ or
 C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition
 ```
 
-### `Init.sh` Setup Script
+### `Setup.bat` Setup Script
 
-If you have Skyrim installed to a different location, run the `Init.ps1` script.
+After installing ...
 
-<img title="Run Init.ps1 with Powershell" alt="Run Init.ps1 with PowerShell" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Papyrus/InitPs1.png" height=200>
+---
 
 `Init.ps1` finds your Steam installation automatically  and updates all files with the correct Skyrim folder path.
 

@@ -1,8 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set CONFIGURED_MOD_NAME=Hello there how are you
-set CONFIGURED_DEPLOY_TO=C:\Awesome\Location
+set CONFIGURED_MOD_NAME=
+set CONFIGURED_DEPLOY_TO=
 
 :: [Setup.bat] - Initialize Papyrus project template
 

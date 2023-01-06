@@ -1,8 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set MOD_NAME=Hello there how are you
-set MOD_PREFIX=Hellotherehowareyou
+set MOD_NAME=
+set MOD_PREFIX=
 
 :: TODO - update .esp to be ESPFE ESL flagged
 

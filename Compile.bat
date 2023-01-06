@@ -19,7 +19,7 @@ setlocal EnableDelayedExpansion
 :: Note: the SKYRIM_FOLDER below is only used if you have
 ::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
 ::
-set SKYRIM_FOLDER=c:/steam\steamapps\common\Skyrim Special Edition
+set SKYRIM_FOLDER=
 
 set SCRIPTS_FOLDER=Scripts\Source\
 set OUTPUT_FOLDER=Scripts
