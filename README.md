@@ -186,6 +186,9 @@ Double-click on the `Personalize.bat` file in File Explorer and you will be prom
 
 Once complete, the `.esp` will be updated with your _own names_ for Quests, Spells, scripts, etc.
 
+> Note: `Personalize.bat` uses [`bethkit`](https://www.nexusmods.com/skyrim/mods/101736?tab=files) (_also known as [Bethesda Toolkit](https://www.nexusmods.com/skyrim/mods/101736?tab=files)_) to make changes to the template `.esp`.  
+> Running `Personalize.bat` will provide you with instructions on how to install `bethkit` properly.
+
 # Setup your own repository
 
 If you clone this template on GitHub, please:
