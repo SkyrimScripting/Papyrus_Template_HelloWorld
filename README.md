@@ -15,23 +15,16 @@ The simplest possible Papyrus plugin for Skyrim.
   - [Put this folder into your "Mods" folder (_Optional_)](#put-this-folder-into-your-mods-folder-optional)
     - [MO2](#mo2)
     - [Vortex](#vortex)
-- [Project setup](#project-setup)
-  - [`Setup.bat` Setup Script](#setupbat-setup-script)
-- [Updating Docs Below Here Still :)](#updating-docs-below-here-still-)
-    - [Doing it manually](#doing-it-manually)
-  - [Compiling the project](#compiling-the-project)
-    - [Visual Studio Code (_Recommended_)](#visual-studio-code-recommended)
-    - [`Compile.bat`](#compilebat)
-- [Customize the `.esp` Plugin File](#customize-the-esp-plugin-file)
-  - [Creation Kit](#creation-kit)
-  - [`GeneratePlugin.ps1`](#generatepluginps1)
+- [Project `Setup.bat`](#project-setupbat)
+- [Compiling the project](#compiling-the-project)
+  - [Visual Studio Code](#visual-studio-code)
+  - [`Compile.bat`](#compilebat)
+- [Copy mod files (_into Skyrim or mods folder_)](#copy-mod-files-into-skyrim-or-mods-folder)
+  - [Visual Studio Code](#visual-studio-code-1)
+  - [`Deploy.bat`](#deploybat)
+- [Personalize the `.esp` Plugin File](#personalize-the-esp-plugin-file)
+  - [`Personalize.bat`](#personalizebat)
 - [Setup your own repository](#setup-your-own-repository)
-- [Clean This Stuff Up](#clean-this-stuff-up)
-  - [(_Alternate_) Automatically copy files into your "Mods" folder](#alternate-automatically-copy-files-into-your-mods-folder)
-    - [`Scripts.ppj`](#scriptsppj)
-    - [Copying Files](#copying-files)
-      - [Visual Studio Code](#visual-studio-code)
-      - [Pyro](#pyro)
 
 
 # What does it do?
@@ -87,8 +80,6 @@ Optional but *Highly Recommended*
 
 ## Put this folder into your "Mods" folder (_Optional_)
 
-> **Required:** [Mod Organizer 2](https://www.nexusmods.com/skyrimspecialedition/mods/6194?tab=files) or [Vortex](https://www.nexusmods.com/about/vortex/)
-
 If you are using a mod manager, it's easiest if you put this folder directly inside
 of your `mods` folder.
 
@@ -105,85 +96,93 @@ In your mod manager, find the location of your `mods` folder.
 
 <img title="Vortex Mods folder" alt="Vortex Mods folder" src="https://raw.githubusercontent.com/SkyrimScripting/Resources/main/Screenshots/Vortex/VortexSettingsModsFolder.png" height=150 />
 
-Take this template and place it inside of the `mods` folder.
+Take this template folder and place it inside of the `mods` folder.
+
+> For example:
+> ```
+> C:\<your mods folder>\Papyrus_Template_Something
+> ```
 
 Refresh (_or close and re-open_) your mod manager and this template should now show up as a "mod"!
 
-> _Note: Vortex users may still need to Disable and then Enable the mod after making changes_
+> _Note: **Vortex** users may still need to Disable and then Enable the mod after making changes_
 > _for them to become visible to the game._
 
+# Project `Setup.bat`
 
+To get started, run `Setup.bat` (_e.g. double-click on it from File Explorer_)
 
+This does a few things to configure your project:
+- _finds your Skyrim installation (containing Creation Kit)_
+- _detects your Skyrim Creation Kit game scrtips (will prompt to extract them if necessary)_
+- _configures a location to copy your mods files to, if desires (Skyrim Data folder or a mods folder)_
+- _asks you for a custom name for your mod, if desired_
+- _updates all required scripts with these required pieces of information_
 
-# Project setup
+**Nothing will work if you skip this step.**
 
-The project is configured, by default, for users who have Skyrim installed at:
-
-```
-C:\Program Files (x86)\Steam\steamapps\common\Skyrim
-or
-C:\Program Files (x86)\Steam\steamapps\common\Skyrim Special Edition
-```
-
-## `Setup.bat` Setup Script
-
-After installing ...
-
----
-
-# Updating Docs Below Here Still :)
-
----
-
-`Init.ps1` finds your Steam installation automatically  and updates all files with the correct Skyrim folder path.
-
-### Doing it manually
-
-`Init.ps1` simply:
-- Updates `set SKYRIM_FOLDER=[Skyrim path]` in `Compile.bat`
-- Updates `<Import>[Skyrim Path]/Data/Source/Scripts</Import>`
-
-> Note: `Init.ps1` also determines whether your Creation Kit game scripts were extracted from `Scripts.zip` or `scripts.rar` into either the `Data\Source\Scripts` or `Data\Scripts\Source` folders and chooses the correct one automatically.
-
-## Compiling the project
+# Compiling the project
 
 There are two supported ways to compile this Papyrus project:
 
-- Visual Studio Code (_Recommended_)
+- Visual Studio Code
 - `Compile.bat`
 
-### Visual Studio Code (_Recommended_)
+## Visual Studio Code
 
 In [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed:
    > Run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
 
-### `Compile.bat`
+## `Compile.bat`
 
-Double-click on the file from Explorer and files will compile.
+Double-click on the `Compile.bat` file in File Explorer and files will compile.
 
-> This script will automatically detect `Scripts.zip` and extract it, if found.  
-> It also finds your Steam installation automatically), like `Init.ps1`.
+# Copy mod files (_into Skyrim or mods folder_)
 
-# Customize the `.esp` Plugin File
+If you did not place this template folder inside of your mods folder (_see: [Put this folder into your "Mods" folder (_Optional_)](#put-this-folder-into-your-mods-folder-optional)_), then you will need to copy mod files and compiled scripts every time that you make changes to them.
 
-Each template comes with an `.esp` "Elder Scrolls Plugin" file.
+There are two supported ways to copy mods files for this Papyrus project:
 
-This file is loaded by Skyrim and used to run your scripts.
+- Visual Studio Code
+- `Deploy.bat`
 
-If you want to customize the `.esp` file:
+## Visual Studio Code
 
-Open it in **Creation Kit**
+In [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed:
+   > Run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
 
-_\-or-_
+The `Deploy.bat` script is automatically run by Visual Studio Code after each build.
 
-Customize it with **`GeneratePlugin.ps1`**
+## `Deploy.bat`
 
-## Creation Kit
+Double-click on the `Deploy.bat` file in File Explorer and mod files will be copies to the destination configured by `Setup.bat`.
 
-- Open Creation Kit
-- Select the `.esp`
+# Personalize the `.esp` Plugin File
 
-## `GeneratePlugin.ps1`
+Most templates come with an `.esp` "_Elder Scrolls Plugin_" file.
+
+If provided, this file defines things including:
+
+- Editor IDs and names of any Quests (_and names of attached scripts_)
+- Editor IDs and names of any Spells (_and names of attached scripts_)
+- _and more_
+
+It is **not recommended** to share the template `.esp` on sites like Nexus:
+
+- The Editor IDs may not be unique!
+- The script names may not be unique!
+
+With Skyrim, it is _very important_ for each mod to use **unique script names**.
+
+You can customize your `.esp` using Creation Kit, SSEEdit, or by running `Personalize.bat`.
+
+## `Personalize.bat`
+
+Every template with an .esp is configured so it's easy for you to personalize the `.esp` and make it your own.
+
+Double-click on the `Personalize.bat` file in File Explorer and you will be prompted with a series of questions for what to name certain things in your mod.
+
+Once complete, the `.esp` will be updated with your _own names_ for Quests, Spells, scripts, etc.
 
 # Setup your own repository
 
@@ -201,48 +200,3 @@ If you'd like to know more about open source licenses, see:
 **If you use this template, PLEASE release your project as a public open source project.** 💖
 
 **PLEASE DO NOT RELEASE YOUR SKSE PLUGIN ON NEXUS/ETC WITHOUT MAKING THE SOURCE CODE AVAILABLE**
-
-# Clean This Stuff Up
-
-## (_Alternate_) Automatically copy files into your "Mods" folder
-
-> **Required:**  
-> [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
-> or  
-> [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
-
-If you **do not** want to place the template folder directly into your `mods` folder, that's okay too.
-
-This template is configured with an option to copy all of the scripts and other important files (_e.g. `.esp` or `.bsa` for templates containing those file types_).
-
-The option must be enabled in the `Scripts.ppj` file:
-
-### `Scripts.ppj`
-
-By default, the option to copy files is disabled (by `UseInBuild="false"`)
-
-```xml
-<Variables>
-    <Variable Name="ModName" Value="HelloPapyrus" />
-    <Variable Name="OutputFolder" Value="%SKYRIM_MODS_FOLDER%/@ModName" />
-</Variables>
-<PostBuildEvent Description="Copy the mod files into a folder" UseInBuild="false">
-```
-
-To enable copying files to your Mods folder, set `UseInBuild="true"`
-
-### Copying Files
-
-To "run" the `Scripts.ppj` file and deploy these scripts, you need either:
-
- - [Visual Studio Code](https://code.visualstudio.com/) with the [Papyrus extension](https://marketplace.visualstudio.com/items?itemName=joelday.papyrus-lang-vscode) installed  
-or  
- - [`pyro`](https://github.com/fireundubh/pyro/releases) installed and added to your `PATH`
-
-#### Visual Studio Code
-
-With Visual Studio Code, run `Terminal` > `Run Build Task` (or `Ctrl+Shift+B`).
-
-#### Pyro
-
-With `pyro` installed (_and in your `PATH`_), run `Compile.bat`
