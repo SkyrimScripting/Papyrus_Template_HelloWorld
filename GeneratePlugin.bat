@@ -1,8 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-set MOD_NAME=Foo Bar Butts
-set MOD_PREFIX=FooBarButts
+set MOD_NAME=kjdskljfdls
+set MOD_PREFIX=kjdskljfdls
 
 :: TODO - update .esp to be ESPFE ESL flagged
 
@@ -66,7 +66,7 @@ if not %ERRORLEVEL% == 0 (
 echo ^[PROMPT] Mod Prefix
 for /f "usebackq delims=" %%i in (`
   powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox(\"Enter a short prefix for Quest/Script names etc`n`n[no spaces]`n[must start with a letter]`n[only a-z A-Z 0-9 characters allowed]`n`ne.g. If your mod is called 'Cool Amazing Things', maybe your would use 'COOL' or 'CLMAZ' or 'CoolAmazing'.`n`nSome modders use their initials, e.g. 'MPCool'.`n`nThis prefix is used to help keep your Quest/Script/etc names distinct from other mods [they must have unique names]`n`n[please enter nothing to cancel]\", '%MSGBOX_TITLE%', '%MOD_PREFIX%')"
-`) do set MOD_PREFIX=FooBarButts
+`) do set MOD_PREFIX=kjdskljfdls
 Gen if [%MOD_PREFIX%] == [] (
     echo ^[CANCEL] No mod prefix provided.
     goto :cancel

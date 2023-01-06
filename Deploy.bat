@@ -2,24 +2,40 @@
 
 :: [Deploy.bat] - Copy mod files into Skyrim Data/ folder OR your Mods/ folder
 
-:: Note: the SKYRIM_FOLDER below is only used if you have not set
-::       the SKYRIM_MODS_FOLDER environment variable to deploy mods
-::       files into your Vortex or Mod Organizer 2's "Mods/" folder
-::
-set SKYRIM_FOLDER=c:/steam\steamapps\common\Skyrim Special Edition
+set FILES_TO_COPY=HelloPapyrus.esp
+set FOLDERS_TO_COPY=Scripts
+
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+set ALWAYS_DELETE_FIRST=true
+set MOD_OUTPUT_FOLDER=C:\Users\mrowr\AppData\Local\ModOrganizer\Skyrim Special Edition\mods\kjdskljfdls
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deploy.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
-echo ^... Detecting destination for Skyrim mod ...
+echo ^[DEPLOY TO] "%MOD_OUTPUT_FOLDER%"
 
-@REM if defined SKYRIM_MODS_FOLDER (
+if "%ALWAYS_DELETE_FIRST%" == "true" (
+    if exist "%MOD_OUTPUT_FOLDER%" (
+        echo ^[DELETE FOLDER] "%MOD_OUTPUT_FOLDER%"
+        echo ^[NOTE] To disable deleting folder on deploy, change ALWAYS_DELETE_FIRST setting in Deploy.bat to "false"
+        echo ^rmdir /s /q "%MOD_OUTPUT_FOLDER%"
+        rmdir /s /q "%MOD_OUTPUT_FOLDER%"
+    )
+)
 
-@REM )
+mkdir "%MOD_OUTPUT_FOLDER%"
 
-:error
-exit /b 1
-pause
+(for %%f in (%FILES_TO_COPY%) do ( 
+   echo ^[COPY] %%f
+   echo ^xcopy "%%f" "%MOD_OUTPUT_FOLDER%/%%f"*
+   ^xcopy "%%f" "%MOD_OUTPUT_FOLDER%/%%f"*
+)
+(for %%f in (%FOLDERS_TO_COPY%) do ( 
+   echo ^[COPY] %%f
+   echo ^xcopy "%%f" "%MOD_OUTPUT_FOLDER%/%%f"\
+   ^xcopy "%%f" "%MOD_OUTPUT_FOLDER%/%%f"\
+)))
 
-:done
+echo ^Done!
