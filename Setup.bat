@@ -12,14 +12,16 @@ set TEMPLATE_NAME=Hello World
 set PPJ=Scripts.ppj
 set COMPILE_BAT=Compile.bat
 set DEPLOY_BAT=Deploy.bat
+set GENERATE_PLUGIN_BAT=GeneratePlugin.bat
 set TASKS_JSON=.vscode/tasks.json
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Gets the path to your Skyrim folder and updates it in:
+:: - <project root>/.vscode/tasks.json
 :: - <project root>/Compile.bat
 :: - <project root>/Deploy.bat
+:: - <project root>/GeneratePlugin.bat
 :: - <project root>/Scripts.ppj
-:: - <project root>/.vscode/tasks.json
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -187,6 +189,7 @@ if "%MOD_NAME%" == "" (
 )
 
 echo Updating "%PPJ%"
+:: TODO combine these:
 powershell -Command "$content = Get-Content -Raw '%PPJ%'; $content = $content -replace '<Variable Name=\"SkyrimFolder\" Value=\"(.*)\" />', '<Variable Name=\"SkyrimFolder\" Value=\"%SKYRIM_FOLDER%\" />'; $content = $content.Trim(); Set-Content '%PPJ%' $content"
 powershell -Command "$content = Get-Content -Raw '%PPJ%'; $content = $content -replace '<Variable Name=\"ModName\" Value=\"(.*)\" />', '<Variable Name=\"ModName\" Value=\"%MOD_NAME%\" />'; $content = $content.Trim(); Set-Content '%PPJ%' $content"
 powershell -Command "$content = Get-Content -Raw '%PPJ%'; $content = $content -replace '<Variable Name=\"DataScriptsFolder\" Value=\"(.*)\" />', '<Variable Name=\"DataScriptsFolder\" Value=\"%DATA_SCRIPTS_FOLDER%\" />'; $content = $content.Trim(); Set-Content '%PPJ%' $content"
@@ -196,6 +199,9 @@ powershell -Command "$content = Get-Content -Raw '%COMPILE_BAT%'; $content = $co
 
 echo Updating "%DEPLOY_BAT%"
 powershell -Command "$content = Get-Content -Raw '%DEPLOY_BAT%'; $content = $content -replace 'set SKYRIM_FOLDER=.*', 'set SKYRIM_FOLDER=%SKYRIM_FOLDER%'; $content = $content.Trim(); Set-Content '%DEPLOY_BAT%' $content"
+
+echo Updating "%GENERATE_PLUGIN_BAT%"
+powershell -Command "$content = Get-Content -Raw '%GENERATE_PLUGIN_BAT%'; $content = $content -replace 'set MOD_NAME=.*', 'set MOD_NAME=%MOD_NAME%'; $prefix = '%MOD_NAME%'; $prefix = $prefix -replace '[^a-zA-Z0-9]', ''; $content = $content -replace 'set MOD_PREFIX=.*', \"set MOD_PREFIX=${prefix}\"; $content = $content.Trim(); Set-Content '%GENERATE_PLUGIN_BAT%' $content"
 
 echo Updating "%TASKS_JSON%"
 powershell -Command "$path = '%SKYRIM_FOLDER%'; $path = $path -replace '/', '//'; $path = $path -replace '\\', '\\'; $content = Get-Content -Raw '%TASKS_JSON%'; $content = $content -replace '\"gamePath\": \".*\",', ('\"gamePath\": \"' + $path + '\",'); $content = $content.Trim(); Set-Content '%TASKS_JSON%' $content"
