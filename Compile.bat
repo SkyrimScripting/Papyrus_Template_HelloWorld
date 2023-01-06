@@ -1,27 +1,12 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: TODO - make this complain if you haven't run Setup.bat
-:: and ask if you wanna run Setup.bat
-
-:: [Compile.bat] - Compile Papyrus scripts!
- 
-:: > You must have Creation Kit installed
-
-:: Note: Unless you have pyro* installed and in your PATH,
-::       this script *completely ignores* your Scripts.ppj file
-::       and uses the Skyrim Papyrus Compiler *directly*.
-::
-::       Only use this script if you are not using
-::       Visual Studio Code (or the pyro command-line application)
-::
-:: * pyro: https://github.com/fireundubh/pyro/releases
-
-:: Note: the SKYRIM_FOLDER below is only used if you have
-::       neither `pyro` nor `PapyrusCompiler.exe` in your PATH
-::
 set SKYRIM_FOLDER=
 
+:: [Compile.bat] - Compile Papyrus scripts!
+
+:: Requires Creation Kit to be installed
+ 
 set SCRIPTS_FOLDER=Scripts\Source\
 set OUTPUT_FOLDER=Scripts
 
@@ -32,6 +17,12 @@ set OUTPUT_FOLDER=Scripts
 :: For newlines in PowerShell commands
 (set \n=^
 %=Do not remove this line=%
+)
+
+if "%SKYRIM_FOLDER%" == "" (
+    set ERROR_MSG=^[ERROR] Skyim Folder not configured.
+    set ERROR_MSG=^!ERROR_MSG!`n`nPlease run Setup.bat
+    goto :error_msg
 )
 
 :: Check for pyro.exe

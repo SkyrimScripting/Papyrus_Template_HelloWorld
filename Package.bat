@@ -1,18 +1,28 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: TODO - make this complain if you haven't run Setup.bat
-:: and ask if you wanna run Setup.bat
+set MOD_NAME=
 
 :: [Package.bat] - .Zip up mod files for sharing and distribution
 
-set MOD_NAME=
 set FILES_TO_COPY=HelloPapyrus.esp
 set FOLDERS_TO_COPY=Scripts
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Package.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:: For newlines in PowerShell commands
+(set \n=^
+%=Do not remove this line=%
+)
+
+if "%MOD_NAME%" == "" (
+    set ERROR_MSG=^[ERROR] Mod name not configured.
+    set ERROR_MSG=^!ERROR_MSG!`n`nPlease run Setup.bat
+    goto :error_msg
+)
+
 
 set COMPRESS_ARCHIVE_ARG=
 
@@ -35,3 +45,13 @@ echo ^powershell -c "Compress-Archive -LiteralPath %COMPRESS_ARCHIVE_ARG% -Desti
 powershell -c "Compress-Archive -LiteralPath %COMPRESS_ARCHIVE_ARG% -DestinationPath \"%MOD_NAME%.zip\""
 
 echo ^Done!
+goto :done
+
+:error_msg
+    powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show(@\"!\n!!ERROR_MSG!!\n!\"@).ToString(); ''"
+
+:error
+    echo ^[ERROR] Exiting...
+    exit /b 1
+
+:done

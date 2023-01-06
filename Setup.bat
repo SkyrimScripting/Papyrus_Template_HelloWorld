@@ -12,6 +12,10 @@ set CONFIGURED_DEPLOY_TO=
 
 set TEMPLATE_NAME=Hello World
 
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+:: Setup.bat script code below
+::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
 set PPJ=Scripts.ppj
 set COMPILE_BAT=Compile.bat
 set DEPLOY_BAT=Deploy.bat
@@ -19,21 +23,6 @@ set GENERATE_PLUGIN_BAT=GeneratePlugin.bat
 set PACKAGE_BAT=Package.bat
 set SETUP_BAT=Setup.bat
 set TASKS_JSON=.vscode/tasks.json
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Gets the path to your Skyrim folder and updates it in:
-:: - <project root>/.vscode/tasks.json
-:: - <project root>/Compile.bat
-:: - <project root>/Deploy.bat
-:: - <project root>/GeneratePlugin.bat
-:: - <project root>/Package.bat
-:: - <project root>/Setup.bat
-:: - <project root>/Scripts.ppj
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-:: Setup.bat script code below
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 
 set MOD_NAME=%CONFIGURED_MOD_NAME%
 set DEPLOY_TO=%CONFIGURED_DEPLOY_TO%

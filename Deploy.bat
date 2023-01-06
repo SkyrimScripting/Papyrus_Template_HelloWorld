@@ -1,8 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: TODO - make this complain if you haven't run Setup.bat
-:: and ask if you wanna run Setup.bat
+set MOD_OUTPUT_FOLDER=
+set ALWAYS_DELETE_FIRST=true
 
 :: [Deploy.bat] - Copy mod files into Skyrim Data/ folder OR your Mods/ folder
 
@@ -10,13 +10,19 @@ set FILES_TO_COPY=HelloPapyrus.esp
 set FOLDERS_TO_COPY=Scripts
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
-
-set ALWAYS_DELETE_FIRST=true
-set MOD_OUTPUT_FOLDER=
-
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
 :: Deploy.bat script code below
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+
+:: For newlines in PowerShell commands
+(set \n=^
+%=Do not remove this line=%
+)
+
+if "%MOD_OUTPUT_FOLDER%" == "" (
+    set ERROR_MSG=^[ERROR] Output destination not configured.
+    set ERROR_MSG=^!ERROR_MSG!`n`nPlease run Setup.bat
+    goto :error_msg
+)
 
 echo ^[DEPLOY TO] "%MOD_OUTPUT_FOLDER%"
 
@@ -43,3 +49,13 @@ mkdir "%MOD_OUTPUT_FOLDER%"
 )))
 
 echo ^Done!
+goto :done
+
+:error_msg
+    powershell -c "Add-Type -Assembly System.Windows.Forms; $result = [System.Windows.Forms.MessageBox]::Show(@\"!\n!!ERROR_MSG!!\n!\"@).ToString(); ''"
+
+:error
+    echo ^[ERROR] Exiting...
+    exit /b 1
+
+:done

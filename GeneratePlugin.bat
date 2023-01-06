@@ -1,19 +1,13 @@
 @echo off
 setlocal EnableDelayedExpansion
 
-:: TODO - make this complain if you haven't run Setup.bat
-:: and ask if you wanna run Setup.bat
-
 set MOD_NAME=
 set MOD_PREFIX=
 
-:: TODO - update .esp to be ESPFE ESL flagged
-
 :: [GeneratePlugin.bat] - Create your own .esp (from existing template .esp)
-::
+
 :: Requires bethkit.exe to be extracted to you computer and added to your PATH
 :: https://www.nexusmods.com/skyrim/mods/101736/
-::
 
 set TEMPLATE_NAME=HelloPapyrus
 set TEMPLATE_ESX=%TEMPLATE_NAME%.esx
@@ -38,6 +32,17 @@ set MSGBOX_TITLE=Generate .esp Plugin
 :: For newlines in PowerShell commands
 (set \n=^
 %=Do not remove this line=%
+)
+
+if "%MOD_NAME%" == "" (
+    set ERROR_MSG=^[ERROR] Mod name not configured.
+    set ERROR_MSG=^!ERROR_MSG!`n`nPlease run Setup.bat
+    goto :error_msg
+)
+if "%MOD_PREFIX%" == "" (
+    set ERROR_MSG=^[ERROR] Mod prefix not configured.
+    set ERROR_MSG=^!ERROR_MSG!`n`nPlease run Setup.bat
+    goto :error_msg
 )
 
 echo ^[SEARCH] bethkit.exe
