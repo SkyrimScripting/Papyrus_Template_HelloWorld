@@ -30,19 +30,23 @@ goto :end
 
 :verify_skyrim_folder
     call :find_skyrim_folder
-    echo verify
+    if "%SKYRIM_FOLDER%" == "" call :error_skyrim_with_creation_kit_not_found
     goto :end
 
 :find_skyrim_folder
     if not "%SKYRIM_FOLDER%" == "" goto :end
     call :find_steam_folder
-    if "%STEAM_FOLDER%" == "" call :error_steam_not_found
-    echo lookup
+    set STEAM_GAME_FOLDER=%STEAM_FOLDER%/steamapps/common
+    set SKYRIM_LE_FOLDER=%STEAM_GAME_FOLDER%/Skyrim
+    set SKYRIM_SE_FOLDER=%STEAM_GAME_FOLDER%/Skyrim Special Edition
+    if exist "%SKYRIM_LE_FOLDER%/CreationKit.exe" set SKYRIM_FOLDER=%SKYRIM_LE_FOLDER%
+    if exist "%SKYRIM_SE_FOLDER%/CreationKit.exe" set SKYRIM_FOLDER=%SKYRIM_SE_FOLDER%
     goto :end
 
 :find_steam_folder
     if not "%STEAM_FOLDER%" == "" goto :end
-    @REM for /f "tokens=2* skip=2" %%a in ('reg query "HKCU\SOFTWARE\Valve\Steam" /v "SteamPath"') do set STEAM_FOLDER=%%b
+    for /f "tokens=2* skip=2" %%a in ('reg query "HKCU\SOFTWARE\Valve\Steam" /v "SteamPath"') do set STEAM_FOLDER=%%b
+    if "%STEAM_FOLDER%" == "" call :error_steam_not_found
     goto :end
 
 ::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
@@ -135,6 +139,21 @@ goto :end
     set MSGBOX_TEXT=^Could not find find Steam directory
     set MSGBOX_TEXT=^!MSGBOX_TEXT!!\n!!\n!( Is Steam installed? )
     set MSGBOX_TEXT=^!MSGBOX_TEXT!!\n!!\n!You can fix this error by creating a new Windows environment variable called SKYRIM_FOLDER and setting the value to the full path of your Skyrim or Skyrim Special Edition game directory.
+    call :msgbox_redirect_readme
+    goto :exit
+
+:error_skyrim_with_creation_kit_not_found
+    call :use_newlines
+    set MSGBOX_TITLE=^Error
+    set MSGBOX_TEXT=^Could not find find Skyrim directory with Creation Kit installed
+    if exist "%SKYRIM_SE_FOLDER%" (
+        set MSGBOX_TEXT=^!MSGBOX_TEXT!!\n!!\n![FOUND] Skyrim SE: !SKYRIM_SE_FOLDER!
+        set MSGBOX_TEXT=^!MSGBOX_TEXT!!\n!!\n![MISSING] Creation Kit SE: !SKYRIM_SE_FOLDER!/CreationKit.exe
+    )
+    if exist "%SKYRIM_LE_FOLDER%" (
+        set MSGBOX_TEXT=^!MSGBOX_TEXT!!\n!!\n![FOUND] Skyrim LE: !SKYRIM_LE_FOLDER!
+        set MSGBOX_TEXT=^!MSGBOX_TEXT!!\n!!\n![MISSING] Creation Kit LE: !SKYRIM_LE_FOLDER!/CreationKit.exe
+    )
     call :msgbox_redirect_readme
     goto :exit
 
