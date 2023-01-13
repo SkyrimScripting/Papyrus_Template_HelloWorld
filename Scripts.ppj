@@ -1,4 +1,4 @@
-<PapyrusProject Flags="TESV_Papyrus_Flags.flg" Game="sse" Output="Scripts">
+<PapyrusProject Output="Scripts" Game="sse" Flags="TESV_Papyrus_Flags.flg" xmlns="PapyrusProject.xsd">
 
     <!-- These variables simply help you organize your .ppj Papyrus project file -->
     <Variables>
