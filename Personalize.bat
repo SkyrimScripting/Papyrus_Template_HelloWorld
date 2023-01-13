@@ -74,8 +74,9 @@ if not %ERRORLEVEL% == 0 (
 echo ^[PROMPT] Mod Prefix
 for /f "usebackq delims=" %%i in (`
   powershell -Command "Add-Type -AssemblyName Microsoft.VisualBasic; [Microsoft.VisualBasic.Interaction]::InputBox(\"Enter a short prefix for Quest/Script names etc`n`n[no spaces]`n[must start with a letter]`n[only a-z A-Z 0-9 characters allowed]`n`ne.g. If your mod is called 'Cool Amazing Things', maybe your would use 'COOL' or 'CLMAZ' or 'CoolAmazing'.`n`nSome modders use their initials, e.g. 'MPCool'.`n`nThis prefix is used to help keep your Quest/Script/etc names distinct from other mods [they must have unique names]`n`n[please enter nothing to cancel]\", '%MSGBOX_TITLE%', '%MOD_PREFIX%')"
-`) do set MOD_PREFIX=Hellotherehowareyou
 Gen if [%MOD_PREFIX%] == [] (
+`) do set MOD_PREFIX=%%i
+if [%MOD_PREFIX%] == [] (
     echo ^[CANCEL] No mod prefix provided.
     goto :cancel
 ) else (
