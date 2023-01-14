@@ -1,6 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: TODO - for Personalize, provide DEFAULT suffixes. So you auto get PREFIX_Quest and PREFIX_Main and PREFIX_Player etc
+
 :: just for testing:
 cls
 
