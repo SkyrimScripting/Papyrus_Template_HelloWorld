@@ -1,6 +1,8 @@
 @echo off
 setlocal EnableDelayedExpansion
 
+:: TODO - write paths and custom things to a ModConfig.ini and DO NOT OVERWRITE the script files plz. And add that file to .gitignore but have an example.ini
+
 :: TODO - for Personalize, provide DEFAULT suffixes. So you auto get PREFIX_Quest and PREFIX_Main and PREFIX_Player etc
 
 :: just for testing:
